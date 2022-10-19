@@ -1,33 +1,19 @@
 kind: pipeline
 name: docker
 
-platform:
-  runner: 10.11.92.33
+trigger:
+  branch:
+    - main
 
 volumes:
   - name: docker
     host:
       path: /var/run/docker.sock
 
-workspace:
-  path: /go/src/github.com/docker/docker
-
 clone:
   disable: true
 
 steps:
-  - name: docker-init-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-amd64
-    commands:
-      - mkdir -p dist/linux-amd64
-      - cp /usr/local/bin/tini-static dist/linux-amd64/docker-init
-
-  - name: docker-cli-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.18-amd64
-    commands:
-      - mkdir -p dist/linux-amd64
-      - cp /usr/local/bin/docker dist/linux-amd64/
-
   - name: runc-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-amd64
     commands:
@@ -45,6 +31,24 @@ steps:
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-amd64/
       - cp /usr/local/bin/containerd-stress dist/linux-amd64/
 
+  - name: docker-init-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-amd64
+    commands:
+      - mkdir -p dist/linux-amd64
+      - cp /usr/local/bin/tini-static dist/linux-amd64/docker-init
+
+  - name: docker-cli-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-amd64
+    commands:
+      - mkdir -p dist/linux-amd64
+      - cp /usr/local/bin/docker dist/linux-amd64/
+
+  - name: dockerd-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-amd64
+    commands:
+      - mkdir -p dist/linux-amd64
+      - cp /usr/local/bin/dockerd dist/linux-amd64/
+
   - name: tgz-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     commands:
@@ -53,37 +57,20 @@ steps:
       - mkdir -p dist/linux-amd64/docker
       - mv /tmp/docker/* dist/linux-amd64/docker/
       - cd dist/linux-amd64
-      - tar zcvf docker-20.10.18.tgz docker
+      - tar zcvf docker-20.10.19.tgz docker
       - rm -rf docker
     depends_on:
       - docker-init-amd64
       - docker-cli-amd64
       - runc-amd64
       - containerd-amd64
-
-  - name: docker-init-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-arm64
-    commands:
-      - mkdir -p dist/linux-arm64
-      - cp /usr/local/bin/tini-static dist/linux-arm64/docker-init
-    depends_on:
-      - fetch
-
-  - name: docker-cli-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.18-arm64
-    commands:
-      - mkdir -p dist/linux-arm64
-      - cp /usr/local/bin/docker dist/linux-arm64/
-    depends_on:
-      - fetch
+      - dockerd-amd64
 
   - name: runc-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-arm64
     commands:
       - mkdir -p dist/linux-arm64
       - cp /usr/local/bin/runc dist/linux-arm64/
-    depends_on:
-      - fetch
 
   - name: containerd-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.8-arm64
@@ -95,8 +82,24 @@ steps:
       - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-arm64/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-arm64/
       - cp /usr/local/bin/containerd-stress dist/linux-arm64/
-    depends_on:
-      - fetch
+
+  - name: docker-init-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-arm64
+    commands:
+      - mkdir -p dist/linux-arm64
+      - cp /usr/local/bin/tini-static dist/linux-arm64/docker-init
+
+  - name: docker-cli-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-arm64
+    commands:
+      - mkdir -p dist/linux-arm64
+      - cp /usr/local/bin/docker dist/linux-arm64/
+
+  - name: dockerd-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-arm64
+    commands:
+      - mkdir -p dist/linux-arm64
+      - cp /usr/local/bin/dockerd dist/linux-arm64/
 
   - name: tgz-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -106,38 +109,20 @@ steps:
       - mkdir -p dist/linux-arm64/docker
       - mv /tmp/docker/* dist/linux-arm64/docker/
       - cd dist/linux-arm64
-      - tar zcvf docker-20.10.18.tgz docker
+      - tar zcvf docker-20.10.19.tgz docker
       - rm -rf docker
     depends_on:
-      - golang
       - docker-init-arm64
       - docker-cli-arm64
       - runc-arm64
       - containerd-arm64
-
-  - name: docker-init-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-ppc64le
-    commands:
-      - mkdir -p dist/linux-ppc64le
-      - cp /usr/local/bin/tini-static dist/linux-ppc64le/docker-init
-    depends_on:
-      - fetch
-
-  - name: docker-cli-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.18-ppc64le
-    commands:
-      - mkdir -p dist/linux-ppc64le
-      - cp /usr/local/bin/docker dist/linux-ppc64le/
-    depends_on:
-      - fetch
+      - dockerd-arm64
 
   - name: runc-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-ppc64le
     commands:
       - mkdir -p dist/linux-ppc64le
       - cp /usr/local/bin/runc dist/linux-ppc64le/
-    depends_on:
-      - fetch
 
   - name: containerd-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.8-ppc64le
@@ -149,8 +134,24 @@ steps:
       - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-ppc64le/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-ppc64le/
       - cp /usr/local/bin/containerd-stress dist/linux-ppc64le/
-    depends_on:
-      - fetch
+
+  - name: docker-init-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-ppc64le
+    commands:
+      - mkdir -p dist/linux-ppc64le
+      - cp /usr/local/bin/tini-static dist/linux-ppc64le/docker-init
+
+  - name: docker-cli-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-ppc64le
+    commands:
+      - mkdir -p dist/linux-ppc64le
+      - cp /usr/local/bin/docker dist/linux-ppc64le/
+
+  - name: dockerd-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-ppc64le
+    commands:
+      - mkdir -p dist/linux-ppc64le
+      - cp /usr/local/bin/dockerd dist/linux-ppc64le/
 
   - name: tgz-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -160,38 +161,20 @@ steps:
       - mkdir -p dist/linux-ppc64le/docker
       - mv /tmp/docker/* dist/linux-ppc64le/docker/
       - cd dist/linux-ppc64le
-      - tar zcvf docker-20.10.18.tgz docker
+      - tar zcvf docker-20.10.19.tgz docker
       - rm -rf docker
     depends_on:
-      - golang
-      - docker-init-ppc64le
-      - docker-cli-ppc64le
       - runc-ppc64le
       - containerd-ppc64le
-
-  - name: docker-init-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
-    commands:
-      - mkdir -p dist/linux-mips64le
-      - cp /usr/local/bin/tini-static dist/linux-mips64le/docker-init
-    depends_on:
-      - fetch
-
-  - name: docker-cli-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.18-mips64le
-    commands:
-      - mkdir -p dist/linux-mips64le
-      - cp /usr/local/bin/docker dist/linux-mips64le/
-    depends_on:
-      - fetch
+      - docker-init-ppc64le
+      - docker-cli-ppc64le
+      - dockerd-ppc64le
 
   - name: runc-mips64le
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-mips64le
     commands:
       - mkdir -p dist/linux-mips64le
       - cp /usr/local/bin/runc dist/linux-mips64le/
-    depends_on:
-      - fetch
 
   - name: containerd-mips64le
     image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.8-mips64le
@@ -203,8 +186,24 @@ steps:
       - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-mips64le/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-mips64le/
       - cp /usr/local/bin/containerd-stress dist/linux-mips64le/
-    depends_on:
-      - fetch
+
+  - name: docker-init-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/tini-static dist/linux-mips64le/docker-init
+
+  - name: docker-cli-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/docker dist/linux-mips64le/
+
+  - name: dockerd-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/dockerd dist/linux-mips64le/
 
   - name: tgz-mips64le
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -214,109 +213,25 @@ steps:
       - mkdir -p dist/linux-mips64le/docker
       - mv /tmp/docker/* dist/linux-mips64le/docker/
       - cd dist/linux-mips64le
-      - tar zcvf docker-20.10.18.tgz docker
+      - tar zcvf docker-20.10.19.tgz docker
       - rm -rf docker
     depends_on:
-      - golang
-      - docker-init-mips64le
-      - docker-cli-mips64le
       - runc-mips64le
       - containerd-mips64le
-
-  - name: docker-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      dockerfile: .beagle/dockerfile
-      cwd: dist
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine-data:3-amd64
-      repo: wod/docker
-      version: v20.10.18-tgz
-      channel: amd64
-      args: 'TARGETOS=linux,TARGETARCH=amd64'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-    depends_on:
-      - tgz-amd64
-
-  - name: docker-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      dockerfile: .beagle/dockerfile
-      cwd: dist
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine-data:3-arm64
-      repo: wod/docker
-      version: v20.10.18-tgz
-      channel: arm64
-      args: 'TARGETOS=linux,TARGETARCH=arm64'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-    depends_on:
-      - tgz-arm64
-
-  - name: docker-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      dockerfile: .beagle/dockerfile
-      cwd: dist
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine-data:3-ppc64le
-      repo: wod/docker
-      version: v20.10.18-tgz
-      channel: ppc64le
-      args: 'TARGETOS=linux,TARGETARCH=ppc64le'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-    depends_on:
-      - tgz-ppc64le
-
-  - name: docker-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    settings:
-      dockerfile: .beagle/dockerfile
-      cwd: dist
-      base: registry.cn-qingdao.aliyuncs.com/wod/alpine-data:3-mips64le
-      repo: wod/docker
-      version: v20.10.18-tgz
-      channel: mips64le
-      args: 'TARGETOS=linux,TARGETARCH=mips64le'
-      registry: registry.cn-qingdao.aliyuncs.com
-      registry_user:
-        from_secret: REGISTRY_USER_ALIYUN
-      registry_password:
-        from_secret: REGISTRY_PASSWORD_ALIYUN
-    depends_on:
-      - tgz-mips64le
+      - docker-init-mips64le
+      - docker-cli-mips64le
+      - dockerd-mips64le
+      
+---
+kind: secret
+name: ACCESS_KEY_MINIO
+get:
+  name: ACCESS_KEY_MINIO
+  path: devops-secrets
 
 ---
 kind: secret
-name: REGISTRY_USER_ALIYUN
+name: SECRET_KEY_MINIO
 get:
-  path: devops-registry-aliyun
-  name: USERNAME
-
----
-kind: secret
-name: REGISTRY_PASSWORD_ALIYUN
-get:
-  path: devops-registry-aliyun
-  name: PASSWORD
+  name: SECRET_KEY_MINIO
+  path: devops-secrets
