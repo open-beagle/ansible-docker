@@ -37,18 +37,18 @@ source /etc/environment
 
 set -ex
 
-if ! [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
-  rm -rf /opt/docker/$DOCKER_VERSION
-  tar -xzvf /opt/docker/docker-$DOCKER_VERSION.tgz -C /opt/docker/
-  mv /opt/docker/docker /opt/docker/$DOCKER_VERSION
-  rm -rf /opt/docker/docker-$DOCKER_VERSION.tgz
-  touch /opt/docker/VERSION-$DOCKER_VERSION.md
+if [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
+  exit 0 
 fi
 
-rm -rf /opt/bin/docker /opt/bin/dockerd /opt/bin/docker-init /opt/bin/docker-proxy
-cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
-cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
-cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
+rm -rf /opt/docker/$DOCKER_VERSION
+tar -xzvf /opt/docker/docker-$DOCKER_VERSION.tgz -C /opt/docker/
+mv /opt/docker/docker /opt/docker/$DOCKER_VERSION
+rm -rf /opt/docker/docker-$DOCKER_VERSION.tgz
+touch /opt/docker/VERSION-$DOCKER_VERSION.md
+
+rm -rf /opt/bin/runc
+cp /opt/docker/$DOCKER_VERSION/runc /opt/bin/runc
 
 rm -rf /opt/bin/ctr /opt/bin/containerd /opt/bin/containerd-shim /opt/bin/containerd-shim-runc-v2
 cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
@@ -56,13 +56,16 @@ cp /opt/docker/$DOCKER_VERSION/containerd /opt/bin/containerd
 cp /opt/docker/$DOCKER_VERSION/containerd-shim /opt/bin/containerd-shim
 cp /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /opt/bin/containerd-shim-runc-v2
 
-rm -rf /opt/bin/runc
-cp /opt/docker/$DOCKER_VERSION/runc /opt/bin/runc
+rm -rf /opt/bin/nerdctl
+cp /opt/docker/$DOCKER_VERSION/nerdctl /opt/bin/nerdctl
 
-rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy
-ln -s /opt/docker/$DOCKER_VERSION/docker /usr/local/bin/docker
-ln -s /opt/docker/$DOCKER_VERSION/dockerd /usr/local/bin/dockerd
-ln -s /opt/docker/$DOCKER_VERSION/docker-init /usr/local/bin/docker-init
+rm -rf /opt/bin/docker /opt/bin/dockerd /opt/bin/docker-init /opt/bin/docker-proxy
+cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
+cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
+cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
+
+rm -rf /usr/local/bin/runc
+ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
 
 rm -rf /usr/local/bin/ctr /usr/local/bin/containerd /usr/local/bin/containerd-shim /usr/local/bin/containerd-shim-runc-v2
 ln -s /opt/docker/$DOCKER_VERSION/ctr /usr/local/bin/ctr
@@ -70,8 +73,13 @@ ln -s /opt/docker/$DOCKER_VERSION/containerd /usr/local/bin/containerd
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim /usr/local/bin/containerd-shim
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
 
-rm -rf /usr/local/bin/runc
-ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
+rm -rf /usr/local/bin/nerdctl
+cp /usr/local/bin/$DOCKER_VERSION/nerdctl /usr/local/bin/nerdctl
+
+rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy
+ln -s /opt/docker/$DOCKER_VERSION/docker /usr/local/bin/docker
+ln -s /opt/docker/$DOCKER_VERSION/dockerd /usr/local/bin/dockerd
+ln -s /opt/docker/$DOCKER_VERSION/docker-init /usr/local/bin/docker-init
 
 cat > /etc/systemd/system/containerd.service <<\EOF
 # Copyright The containerd Authors.
@@ -139,8 +147,8 @@ cat > /etc/systemd/system/docker.service <<\EOF
 Description=Docker Application Container Engine
 Documentation=https://docs.docker.com
 After=network-online.target firewalld.service containerd.service
-Wants=network-online.target
-Requires=docker.socket containerd.service
+Wants=network-online.target containerd.service
+Requires=docker.socket 
 
 [Service]
 Type=notify
@@ -185,6 +193,16 @@ OOMScoreAdjust=-500
 WantedBy=multi-user.target
 
 EOF
+
+# docker , 重启docker时保持容器继续运行
+mkdir -p /etc/docker/
+if ! [ -e /etc/docker/daemon.json ]; then  
+  cat >> /etc/docker/daemon.json <<-EOF
+{
+  "live-restore": true
+}
+EOF
+fi
 
 # containerd , 信任自签名证书和默认登录
 mkdir -p /etc/containerd
