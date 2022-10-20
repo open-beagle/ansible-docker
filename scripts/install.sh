@@ -41,9 +41,8 @@ if [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
   exit 0 
 fi
 
-rm -rf /opt/docker/$DOCKER_VERSION
-tar -xzvf /opt/docker/docker-$DOCKER_VERSION.tgz -C /opt/docker/
-mv /opt/docker/docker /opt/docker/$DOCKER_VERSION
+mkdir -p /opt/docker/$DOCKER_VERSION
+tar -xzvf /opt/docker/docker-$DOCKER_VERSION.tgz -C /opt/docker/$DOCKER_VERSION
 rm -rf /opt/docker/docker-$DOCKER_VERSION.tgz
 touch /opt/docker/VERSION-$DOCKER_VERSION.md
 
