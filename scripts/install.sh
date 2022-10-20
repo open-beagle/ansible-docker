@@ -73,7 +73,7 @@ ln -s /opt/docker/$DOCKER_VERSION/containerd-shim /usr/local/bin/containerd-shim
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
 
 rm -rf /usr/local/bin/nerdctl
-cp /usr/local/bin/$DOCKER_VERSION/nerdctl /usr/local/bin/nerdctl
+cp /opt/docker/$DOCKER_VERSION/nerdctl /usr/local/bin/nerdctl
 
 rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy
 ln -s /opt/docker/$DOCKER_VERSION/docker /usr/local/bin/docker
