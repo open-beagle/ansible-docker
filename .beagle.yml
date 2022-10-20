@@ -9,6 +9,12 @@ clone:
   disable: true
 
 steps:
+  - name: fetch
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
+    settings:
+      proxy:
+        from_secret: SOCKS5_PROXY
+        
   - name: runc-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-amd64
     commands:
