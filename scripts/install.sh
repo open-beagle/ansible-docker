@@ -198,7 +198,11 @@ mkdir -p /etc/docker/
 if ! [ -e /etc/docker/daemon.json ]; then  
   cat >> /etc/docker/daemon.json <<-EOF
 {
-  "live-restore": true
+  "live-restore": true,
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  }
 }
 EOF
 fi
