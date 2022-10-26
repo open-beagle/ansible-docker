@@ -10,6 +10,8 @@ systemctl disable containerd.service
 systemctl disable docker.socket 
 systemctl disable docker.service 
 
+rm -rf /etc/systemd/system/containerd.service /etc/systemd/system/docker.socket /etc/systemd/system/docker.service
+
 rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy
 rm -rf /usr/local/bin/nerdctl
 rm -rf /usr/local/bin/ctr /usr/local/bin/containerd /usr/local/bin/containerd-shim /usr/local/bin/containerd-shim-runc-v2
