@@ -45,13 +45,13 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-amd64/docker-init
 
   - name: docker-cli-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.21-amd64
     commands:
       - mkdir -p dist/linux-amd64
       - cp /usr/local/bin/docker dist/linux-amd64/
 
   - name: dockerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.21-amd64
     commands:
       - mkdir -p dist/linux-amd64
       - cp /usr/local/bin/dockerd dist/linux-amd64/
@@ -60,7 +60,7 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     commands:
       - mkdir -p .tmp/amd64
-      - tar zcvf .tmp/amd64/docker-20.10.19.tgz docker -C dist/linux-amd64/ .
+      - tar zcvf .tmp/amd64/docker-20.10.21.tgz docker -C dist/linux-amd64/ .
     depends_on:
       - runc-amd64
       - containerd-amd64
@@ -99,13 +99,13 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-arm64/docker-init
 
   - name: docker-cli-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.21-arm64
     commands:
       - mkdir -p dist/linux-arm64
       - cp /usr/local/bin/docker dist/linux-arm64/
 
   - name: dockerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.21-arm64
     commands:
       - mkdir -p dist/linux-arm64
       - cp /usr/local/bin/dockerd dist/linux-arm64/
@@ -114,7 +114,7 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     commands:
       - mkdir -p .tmp/arm64
-      - tar zcvf .tmp/arm64/docker-20.10.19.tgz docker -C dist/linux-arm64/ .
+      - tar zcvf .tmp/arm64/docker-20.10.21.tgz docker -C dist/linux-arm64/ .
     depends_on:
       - runc-arm64
       - containerd-arm64
@@ -153,13 +153,13 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-ppc64le/docker-init
 
   - name: docker-cli-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.21-ppc64le
     commands:
       - mkdir -p dist/linux-ppc64le
       - cp /usr/local/bin/docker dist/linux-ppc64le/
 
   - name: dockerd-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.21-ppc64le
     commands:
       - mkdir -p dist/linux-ppc64le
       - cp /usr/local/bin/dockerd dist/linux-ppc64le/
@@ -168,7 +168,7 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     commands:
       - mkdir -p .tmp/ppc64le
-      - tar zcvf .tmp/ppc64le/docker-20.10.19.tgz docker -C dist/linux-ppc64le/ .
+      - tar zcvf .tmp/ppc64le/docker-20.10.21.tgz docker -C dist/linux-ppc64le/ .
     depends_on:
       - runc-ppc64le
       - containerd-ppc64le
@@ -207,13 +207,13 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-mips64le/docker-init
 
   - name: docker-cli-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.19-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v20.10.21-mips64le
     commands:
       - mkdir -p dist/linux-mips64le
       - cp /usr/local/bin/docker dist/linux-mips64le/
 
   - name: dockerd-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.19-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v20.10.21-mips64le
     commands:
       - mkdir -p dist/linux-mips64le
       - cp /usr/local/bin/dockerd dist/linux-mips64le/
@@ -222,7 +222,7 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     commands:
       - mkdir -p .tmp/mips64le
-      - tar zcvf .tmp/mips64le/docker-20.10.19.tgz docker -C dist/linux-mips64le/ .
+      - tar zcvf .tmp/mips64le/docker-20.10.21.tgz docker -C dist/linux-mips64le/ .
     depends_on:
       - runc-mips64le
       - containerd-mips64le
