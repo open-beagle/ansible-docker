@@ -22,7 +22,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-amd64/
 
   - name: containerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.17-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-amd64
     commands:
       - mkdir -p dist/linux-amd64
       - cp /usr/local/bin/ctr dist/linux-amd64/
@@ -76,7 +76,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-arm64/
 
   - name: containerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.17-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-arm64
     commands:
       - mkdir -p dist/linux-arm64
       - cp /usr/local/bin/ctr dist/linux-arm64/
@@ -130,7 +130,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-ppc64le/
 
   - name: containerd-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.17-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-ppc64le
     commands:
       - mkdir -p dist/linux-ppc64le
       - cp /usr/local/bin/ctr dist/linux-ppc64le/
@@ -184,7 +184,7 @@ steps:
   #     - cp /usr/local/bin/runc dist/linux-mips64le/
 
   # - name: containerd-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.17-mips64le
+  #   image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-mips64le
   #   commands:
   #     - mkdir -p dist/linux-mips64le
   #     - cp /usr/local/bin/ctr dist/linux-mips64le/
