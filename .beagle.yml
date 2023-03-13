@@ -177,59 +177,59 @@ steps:
       - docker-cli-ppc64le
       - dockerd-ppc64le
 
-  # - name: runc-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/runc dist/linux-mips64le/
+  - name: runc-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.4-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/runc dist/linux-mips64le/
 
-  # - name: containerd-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/ctr dist/linux-mips64le/
-  #     - cp /usr/local/bin/containerd dist/linux-mips64le/
-  #     - cp /usr/local/bin/containerd-shim dist/linux-mips64le/
-  #     - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-mips64le/
-  #     - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-mips64le/
-  #     - cp /usr/local/bin/containerd-stress dist/linux-mips64le/
+  - name: containerd-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.6.18-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/ctr dist/linux-mips64le/
+      - cp /usr/local/bin/containerd dist/linux-mips64le/
+      - cp /usr/local/bin/containerd-shim dist/linux-mips64le/
+      - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-mips64le/
+      - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-mips64le/
+      - cp /usr/local/bin/containerd-stress dist/linux-mips64le/
 
-  # - name: nerdctl-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.2.0-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/nerdctl dist/linux-mips64le/nerdctl
+  - name: nerdctl-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.2.0-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/nerdctl dist/linux-mips64le/nerdctl
 
-  # - name: docker-init-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/tini-static dist/linux-mips64le/docker-init
+  - name: docker-init-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/tini-static dist/linux-mips64le/docker-init
 
-  # - name: docker-cli-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v23.0.1-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/docker dist/linux-mips64le/
+  - name: docker-cli-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v23.0.1-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/docker dist/linux-mips64le/
 
-  # - name: dockerd-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v23.0.1-mips64le
-  #   commands:
-  #     - mkdir -p dist/linux-mips64le
-  #     - cp /usr/local/bin/dockerd dist/linux-mips64le/
+  - name: dockerd-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v23.0.1-mips64le
+    commands:
+      - mkdir -p dist/linux-mips64le
+      - cp /usr/local/bin/dockerd dist/linux-mips64le/
 
-  # - name: tgz-mips64le
-  #   image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
-  #   commands:
-  #     - mkdir -p .tmp/mips64le
-  #     - tar zcvf .tmp/mips64le/docker-23.0.1.tgz docker -C dist/linux-mips64le/ .
-  #   depends_on:
-  #     - runc-mips64le
-  #     - containerd-mips64le
-  #     - nerdctl-mips64le
-  #     - docker-init-mips64le
-  #     - docker-cli-mips64le
-  #     - dockerd-mips64le
+  - name: tgz-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    commands:
+      - mkdir -p .tmp/mips64le
+      - tar zcvf .tmp/mips64le/docker-23.0.1.tgz docker -C dist/linux-mips64le/ .
+    depends_on:
+      - runc-mips64le
+      - containerd-mips64le
+      - nerdctl-mips64le
+      - docker-init-mips64le
+      - docker-cli-mips64le
+      - dockerd-mips64le
 
   - name: minio
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-minio:1.0
@@ -251,7 +251,7 @@ steps:
       - tgz-amd64
       - tgz-arm64
       - tgz-ppc64le
-      # - tgz-mips64le
+      - tgz-mips64le
 
 ---
 kind: secret
