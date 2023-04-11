@@ -10,14 +10,13 @@ elif [ "$(echo $LOCAL_ARCH | head -c 5)" = "armv8" ]; then
   TARGET_ARCH="arm64"
 elif [ "$LOCAL_ARCH" = "aarch64" ]; then
   TARGET_ARCH="arm64"
-elif [ "$LOCAL_ARCH" = "ppc64le" ]; then
+elif [ "$(echo $LOCAL_ARCH | head -c 5)" = "ppc64" ]; then
   TARGET_ARCH="ppc64le"
-elif [ "$LOCAL_ARCH" = "mips64" ]; then
+elif [ "$(echo $LOCAL_ARCH | head -c 6)" = "mips64" ]; then
   TARGET_ARCH="mips64le"
 else
   echo "This system's architecture $(LOCAL_ARCH) isn't supported"
   TARGET_ARCH="unsupported"
-  exit 0 
 fi
 
 mkdir -p /opt/bin /opt/docker
