@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 DOCKER_VERSION="${DOCKER_VERSION:-23.0.1}"
 
 LOCAL_ARCH=$(uname -m)
@@ -21,9 +23,8 @@ fi
 
 mkdir -p /opt/bin /opt/docker
 
-if ! [ -e /opt/docker/.groupadddocker ]; then
-	groupadd docker
-  touch /opt/docker/.groupadddocker
+if ! [ $(getent group docker) ]; then
+  groupadd docker
 fi
 
 ENV_OPT="/opt/bin:$PATH"
@@ -33,8 +34,6 @@ PATH="${ENV_OPT}"
 EOF
 fi
 source /etc/environment
-
-set -ex
 
 if [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
   exit 0 
