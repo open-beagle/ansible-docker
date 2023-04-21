@@ -2,23 +2,27 @@
 
 set -ex
 
-DOCKER_VERSION="${DOCKER_VERSION:-23.0.1}"
+DOCKER_VERSION="${DOCKER_VERSION:-23.0.4}"
 
 LOCAL_ARCH=$(uname -m)
-
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
   TARGET_ARCH="amd64"
 elif [ "$(echo $LOCAL_ARCH | head -c 5)" = "armv8" ]; then
   TARGET_ARCH="arm64"
 elif [ "$LOCAL_ARCH" = "aarch64" ]; then
   TARGET_ARCH="arm64"
+elif [ "$LOCAL_ARCH" = "loongarch64" ]; then
+  TARGET_ARCH="loong64"
 elif [ "$(echo $LOCAL_ARCH | head -c 5)" = "ppc64" ]; then
   TARGET_ARCH="ppc64le"
 elif [ "$(echo $LOCAL_ARCH | head -c 6)" = "mips64" ]; then
   TARGET_ARCH="mips64le"
 else
-  echo "This system's architecture $(LOCAL_ARCH) isn't supported"
   TARGET_ARCH="unsupported"
+fi
+if [ "$LOCAL_ARCH" = "unsupported" ]; then
+  echo "This system's architecture ${LOCAL_ARCH} isn't supported"
+  exit 0
 fi
 
 mkdir -p /opt/bin /opt/docker
@@ -60,6 +64,7 @@ rm -rf /opt/bin/docker /opt/bin/dockerd /opt/bin/docker-init /opt/bin/docker-pro
 cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
 cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
 cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
+cp /opt/docker/$DOCKER_VERSION/docker-proxy /opt/bin/docker-proxy
 
 rm -rf /usr/local/bin/runc
 ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
