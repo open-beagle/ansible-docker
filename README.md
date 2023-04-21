@@ -1,8 +1,16 @@
 # QuickStart Install Docker
 
+## 在线安装 Docker
+
+```bash
+sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh -
+```
+
+## 离线安装 Docker
+
 ```bash
 # HTTPS服务器
-HTTP_SERVER="https://cache.wodcloud.com/kubernetes"
+HTTP_SERVER="https://cache.wodcloud.com"
 # 平台架构
 TARGET_ARCH="amd64"
 # DOCKER版本

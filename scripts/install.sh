@@ -2,6 +2,11 @@
 
 set -ex
 
+# HTTPS服务器
+HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
+# 平台架构
+TARGET_ARCH="${TARGET_ARCH:-amd64}"
+# DOCKER版本
 DOCKER_VERSION="${DOCKER_VERSION:-23.0.4}"
 
 LOCAL_ARCH=$(uname -m)
@@ -41,6 +46,13 @@ source /etc/environment
 
 if [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
   exit 0 
+fi
+
+if ! [ -e /opt/docker/docker-$DOCKER_VERSION.tgz ]; then
+  mkdir -p /opt/docker
+  # 下载文件
+  # docker-$DOCKER_VERSION.tgz 68MB
+  curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz > /opt/docker/docker-$DOCKER_VERSION.tgz
 fi
 
 mkdir -p /opt/docker/$DOCKER_VERSION
