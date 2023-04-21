@@ -74,6 +74,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p .tmp/$TARGET_ARCH
       - tar zcvf .tmp/$TARGET_ARCH/docker-23.0.4.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-amd64
@@ -142,6 +143,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p .tmp/$TARGET_ARCH
       - tar zcvf .tmp/$TARGET_ARCH/docker-23.0.4.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-arm64
@@ -210,6 +212,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p .tmp/$TARGET_ARCH
       - tar zcvf .tmp/$TARGET_ARCH/docker-23.0.4.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-ppc64le
@@ -278,6 +281,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p .tmp/$TARGET_ARCH
       - tar zcvf .tmp/$TARGET_ARCH/docker-23.0.4.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-mips64le
@@ -346,6 +350,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p .tmp/$TARGET_ARCH
       - tar zcvf .tmp/$TARGET_ARCH/docker-23.0.4.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-loong64
