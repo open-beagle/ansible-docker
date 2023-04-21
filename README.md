@@ -11,7 +11,7 @@ sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh 
 ```bash
 # HTTPS服务器
 HTTP_SERVER="https://cache.wodcloud.com"
-# 平台架构
+# 平台架构 amd64 arm64 ppc64le mips64le loong64
 TARGET_ARCH="amd64"
 # DOCKER版本
 DOCKER_VERSION="23.0.4"
