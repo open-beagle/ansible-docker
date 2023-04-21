@@ -40,7 +40,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET/nerdctl
+      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-amd64
@@ -103,7 +103,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET/nerdctl
+      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-arm64
@@ -166,7 +166,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET/nerdctl
+      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-ppc64le
@@ -229,7 +229,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET/nerdctl
+      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-mips64le
     image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
@@ -292,7 +292,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET/nerdctl
+      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-loong64
