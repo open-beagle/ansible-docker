@@ -28,6 +28,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
@@ -40,6 +41,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-amd64
@@ -47,6 +49,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-amd64
@@ -54,6 +57,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-amd64
@@ -61,6 +65,7 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
@@ -91,6 +96,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
@@ -103,6 +109,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-arm64
@@ -110,6 +117,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-arm64
@@ -117,6 +125,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-arm64
@@ -124,6 +133,7 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
@@ -154,6 +164,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
@@ -166,6 +177,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-ppc64le
@@ -173,6 +185,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-ppc64le
@@ -180,6 +193,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-ppc64le
@@ -187,6 +201,7 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
@@ -217,6 +232,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
@@ -229,6 +245,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-mips64le
@@ -236,6 +253,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-mips64le
@@ -243,6 +261,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-mips64le
@@ -250,6 +269,7 @@ steps:
     environment:
       TARGET_ARCH: mips64le
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
@@ -280,6 +300,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
@@ -292,6 +313,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: docker-init-loong64
@@ -299,6 +321,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-loong64
@@ -306,6 +329,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-loong64
@@ -313,6 +337,7 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
+      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
