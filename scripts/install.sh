@@ -222,7 +222,18 @@ if ! [ -e /etc/docker/daemon.json ]; then
 EOF
 fi
 
+if [ "$TARGET_ARCH" = "loong64" ]; then
+  cat /etc/docker/daemon.json | jq '."seccomp-profile"="unconfined"' > /etc/docker/daemon.json
+fi
+
 systemctl daemon-reload
-systemctl enable containerd.service && systemctl restart containerd.service
-systemctl enable docker.socket && systemctl restart docker.socket
-systemctl enable docker.service && systemctl restart docker.service
+if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then  
+  systemctl enable containerd.service
+fi
+systemctl restart containerd.service
+if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then  
+  systemctl enable docker.socket
+  systemctl enable docker.service
+fi
+systemctl restart docker.socket
+systemctl restart docker.service
