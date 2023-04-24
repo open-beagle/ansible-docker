@@ -222,6 +222,7 @@ if ! [ -e /etc/docker/daemon.json ]; then
 EOF
 fi
 
+# loong64 , loong64架构的基础镜像不支持seccomp，所以要关闭此设置
 if [ "$TARGET_ARCH" = "loong64" ]; then
   cat /etc/docker/daemon.json | jq '."seccomp-profile"="unconfined"' > /etc/docker/daemon.json
 fi
