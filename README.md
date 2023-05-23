@@ -27,3 +27,9 @@ curl $HTTP_SERVER/kubernetes/k8s/docker/install.sh > /opt/docker/install.sh
 # 安装Docker
 bash /opt/docker/install.sh
 ```
+
+## 卸载 Docker
+
+```bash
+sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/uninstall.sh | sh -
+```
