@@ -42,7 +42,6 @@ if ! (grep -q /opt/bin /etc/environment) ; then
 PATH="${ENV_OPT}"
 EOF
 fi
-source /etc/environment
 
 if [ -e /opt/docker/VERSION-$DOCKER_VERSION.md ]; then
   exit 0 
