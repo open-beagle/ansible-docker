@@ -24,7 +24,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
 
   - name: containerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.2-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.3-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -37,7 +37,7 @@ steps:
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
 
   - name: nerdctl-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.4.0-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.5.0-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -53,7 +53,7 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.2-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.5-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -61,7 +61,7 @@ steps:
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.2-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.5-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -75,7 +75,7 @@ steps:
       TARGET_ARCH: amd64
     commands:
       - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.2.tgz docker -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.5.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-amd64
       - containerd-amd64
@@ -93,7 +93,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
 
   - name: containerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.2-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.3-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -106,7 +106,7 @@ steps:
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
 
   - name: nerdctl-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.4.0-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.5.0-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -122,7 +122,7 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.2-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.5-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -130,7 +130,7 @@ steps:
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.2-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.5-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -144,7 +144,7 @@ steps:
       TARGET_ARCH: arm64
     commands:
       - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.2.tgz docker -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.5.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-arm64
       - containerd-arm64
@@ -162,7 +162,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
 
   - name: containerd-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.2-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.3-ppc64le
     environment:
       TARGET_ARCH: ppc64le
     commands:
@@ -175,7 +175,7 @@ steps:
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
 
   - name: nerdctl-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.4.0-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.5.0-ppc64le
     environment:
       TARGET_ARCH: ppc64le
     commands:
@@ -191,7 +191,7 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.2-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.5-ppc64le
     environment:
       TARGET_ARCH: ppc64le
     commands:
@@ -199,7 +199,7 @@ steps:
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-ppc64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.2-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.5-ppc64le
     environment:
       TARGET_ARCH: ppc64le
     commands:
@@ -213,7 +213,7 @@ steps:
       TARGET_ARCH: ppc64le
     commands:
       - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.2.tgz docker -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.5.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-ppc64le
       - containerd-ppc64le
@@ -231,7 +231,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
 
   - name: containerd-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.2-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.3-mips64le
     environment:
       TARGET_ARCH: mips64le
     commands:
@@ -244,7 +244,7 @@ steps:
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
 
   - name: nerdctl-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.4.0-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.5.0-mips64le
     environment:
       TARGET_ARCH: mips64le
     commands:
@@ -260,7 +260,7 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.2-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.5-mips64le
     environment:
       TARGET_ARCH: mips64le
     commands:
@@ -268,7 +268,7 @@ steps:
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.2-mips64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.5-mips64le
     environment:
       TARGET_ARCH: mips64le
     commands:
@@ -282,7 +282,7 @@ steps:
       TARGET_ARCH: mips64le
     commands:
       - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.2.tgz docker -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.5.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-mips64le
       - containerd-mips64le
@@ -300,7 +300,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
 
   - name: containerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.2-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.3-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -313,7 +313,7 @@ steps:
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
 
   - name: nerdctl-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.4.0-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.5.0-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -329,7 +329,7 @@ steps:
       - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
 
   - name: docker-cli-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.2-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v24.0.5-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -337,7 +337,7 @@ steps:
       - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
 
   - name: dockerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.2-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v24.0.5-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -351,7 +351,7 @@ steps:
       TARGET_ARCH: loong64
     commands:
       - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.2.tgz docker -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/$TARGET_ARCH/docker-24.0.5.tgz docker -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - runc-loong64
       - containerd-loong64
