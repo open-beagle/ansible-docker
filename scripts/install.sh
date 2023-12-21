@@ -7,7 +7,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-24.0.5}"
+DOCKER_VERSION="${DOCKER_VERSION:-24.0.7}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -76,6 +76,8 @@ cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
 cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
 cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
 cp /opt/docker/$DOCKER_VERSION/docker-proxy /opt/bin/docker-proxy
+mkdir -p /usr/libexec/docker/cli-plugins
+cp /opt/docker/$DOCKER_VERSION/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 rm -rf /usr/local/bin/runc
 ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
