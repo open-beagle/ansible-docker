@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export PATH=/usr/sbin:$PATH
+
 set -ex
 
 # HTTPS服务器
