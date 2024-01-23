@@ -78,6 +78,8 @@ cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
 cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
 cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
 cp /opt/docker/$DOCKER_VERSION/docker-proxy /opt/bin/docker-proxy
+
+rm -rf /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
@@ -97,6 +99,7 @@ rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /
 ln -s /opt/docker/$DOCKER_VERSION/docker /usr/local/bin/docker
 ln -s /opt/docker/$DOCKER_VERSION/dockerd /usr/local/bin/dockerd
 ln -s /opt/docker/$DOCKER_VERSION/docker-init /usr/local/bin/docker-init
+ln -s /opt/docker/$DOCKER_VERSION/docker-proxy /usr/local/bin/docker-proxy
 
 cat > /etc/systemd/system/containerd.service <<\EOF
 # Copyright The containerd Authors.
