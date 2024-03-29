@@ -122,6 +122,11 @@ Documentation=https://containerd.io
 After=network.target local-fs.target
 
 [Service]
+#如无法正确下载镜像开启以下参数
+#某些开启了杀毒软件的主机可能会在没有MountFags=slave的情况下阻止大型超过300MB的镜像Layer卸载unmount
+#https://github.com/containerd/containerd/issues/5538
+MountFlags=slave
+
 #uncomment to enable the experimental sbservice (sandboxed) version of containerd/cri integration
 #Environment="ENABLE_CRI_SANDBOXES=sandboxed"
 ExecStartPre=-/sbin/modprobe overlay
