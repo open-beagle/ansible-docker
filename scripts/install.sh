@@ -107,7 +107,7 @@ ln -s /opt/docker/$DOCKER_VERSION/docker-proxy /usr/local/bin/docker-proxy
 
 if ! [ -e /opt/cni/bin/portmap ]; then
   mkdir -p /opt/cni/bin
-  cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/ /opt/cni/bin/
+  cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
 fi 
 
 if ! [ -x "$(command -v iptables)" ]; then
