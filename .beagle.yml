@@ -83,8 +83,8 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
-      - mkdir -p dist/linux-$TARGET_ARCH/iptables
-      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+      - mkdir -p dist/linux-$TARGET_ARCH
+      - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -169,8 +169,8 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
-      - mkdir -p dist/linux-$TARGET_ARCH/iptables
-      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+      - mkdir -p dist/linux-$TARGET_ARCH
+      - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -255,8 +255,8 @@ steps:
     environment:
       TARGET_ARCH: ppc64le
     commands:
-      - mkdir -p dist/linux-$TARGET_ARCH/iptables
-      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+      - mkdir -p dist/linux-$TARGET_ARCH
+      - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -341,8 +341,8 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
-      - mkdir -p dist/linux-$TARGET_ARCH/iptables
-      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+      - mkdir -p dist/linux-$TARGET_ARCH
+      - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
