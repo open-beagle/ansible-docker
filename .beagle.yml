@@ -70,6 +70,22 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
+  - name: cni-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
+    environment:
+      TARGET_ARCH: amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/cni-plugins
+      - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
+
+  - name: iptables-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-amd64
+    environment:
+      TARGET_ARCH: amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/iptables
+      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+
   - name: tgz-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
@@ -139,6 +155,22 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
+
+  - name: cni-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
+    environment:
+      TARGET_ARCH: arm64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/cni-plugins
+      - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
+
+  - name: iptables-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-arm64
+    environment:
+      TARGET_ARCH: arm64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/iptables
+      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
 
   - name: tgz-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
@@ -210,6 +242,22 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
+  - name: cni-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-ppc64le
+    environment:
+      TARGET_ARCH: ppc64le
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/cni-plugins
+      - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
+
+  - name: iptables-ppc64le
+    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-ppc64le
+    environment:
+      TARGET_ARCH: ppc64le
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/iptables
+      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+
   - name: tgz-ppc64le
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
@@ -224,76 +272,6 @@ steps:
       - docker-init-ppc64le
       - docker-cli-ppc64le
       - dockerd-ppc64le
-
-  - name: runc-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.12-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/
-
-  - name: containerd-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.15-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim-runc-v1 dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
-
-  - name: nerdctl-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v1.7.5-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
-
-  - name: docker-init-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/tini:v0.19.0-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/tini-static dist/linux-$TARGET_ARCH/docker-init
-
-  - name: docker-cli-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v26.1.0-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/libexec/docker/cli-plugins/docker-buildx dist/linux-$TARGET_ARCH/docker-buildx
-
-  - name: dockerd-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.0-mips64le
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
-
-  - name: tgz-mips64le
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
-    environment:
-      TARGET_ARCH: mips64le
-    commands:
-      - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-26.1.0.tgz docker -C dist/linux-$TARGET_ARCH/ .
-    depends_on:
-      - runc-mips64le
-      - containerd-mips64le
-      - nerdctl-mips64le
-      - docker-init-mips64le
-      - docker-cli-mips64le
-      - dockerd-mips64le
 
   - name: runc-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.12-loong64
@@ -350,6 +328,22 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
 
+  - name: cni-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
+    environment:
+      TARGET_ARCH: loong64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/cni-plugins
+      - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
+
+  - name: iptables-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-loong64
+    environment:
+      TARGET_ARCH: loong64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/iptables
+      - cp -r /iptables/ dist/linux-$TARGET_ARCH/iptables/
+
   - name: tgz-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
@@ -385,7 +379,6 @@ steps:
       - tgz-amd64
       - tgz-arm64
       - tgz-ppc64le
-      - tgz-mips64le
       - tgz-loong64
 
 ---
