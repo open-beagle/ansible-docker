@@ -110,8 +110,8 @@ if ! [ -e /opt/cni/bin/portmap ]; then
   cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/ /opt/cni/bin/
 fi 
 
-if command -v iptables > /dev/null 2>&1; then
-  cp -r /opt/docker/$DOCKER_VERSION/iptables/ /usr/local/
+if command -v iptables &> /dev/null; then
+  cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
 fi 
 
 cat > /etc/systemd/system/containerd.service <<\EOF
