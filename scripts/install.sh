@@ -110,7 +110,7 @@ if ! [ -e /opt/cni/bin/portmap ]; then
   cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/ /opt/cni/bin/
 fi 
 
-if command -v iptables &> /dev/null; then
+if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
 fi 
 
