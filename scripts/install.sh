@@ -9,7 +9,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-26.1.0}"
+DOCKER_VERSION="${DOCKER_VERSION:-26.1.5}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -39,21 +39,21 @@ if ! [ $(getent group docker) ]; then
 fi
 
 ENV_OPT="/opt/bin:$PATH"
-if ! (grep -q /opt/bin /etc/environment) ; then
-  cat > /etc/environment <<-EOF
+if ! (grep -q /opt/bin /etc/environment); then
+  cat >/etc/environment <<-EOF
 PATH="${ENV_OPT}"
 EOF
 fi
 
 if [ -e /opt/docker/docker-$DOCKER_VERSION.md ]; then
-  exit 0 
+  exit 0
 fi
 
 if ! [ -e /opt/docker/docker-$DOCKER_VERSION.tgz ]; then
   mkdir -p /opt/docker
   # 下载文件
   # docker-$DOCKER_VERSION.tgz 68MB
-  curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz > /opt/docker/docker-$DOCKER_VERSION.tgz
+  curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz >/opt/docker/docker-$DOCKER_VERSION.tgz
 fi
 
 mkdir -p /opt/docker/$DOCKER_VERSION
@@ -108,13 +108,13 @@ ln -s /opt/docker/$DOCKER_VERSION/docker-proxy /usr/local/bin/docker-proxy
 if ! [ -e /opt/cni/bin/portmap ]; then
   mkdir -p /opt/cni/bin
   cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
-fi 
+fi
 
 if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
-fi 
+fi
 
-cat > /etc/systemd/system/containerd.service <<\EOF
+cat >/etc/systemd/system/containerd.service <<\EOF
 # Copyright The containerd Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -165,7 +165,7 @@ WantedBy=multi-user.target
 
 EOF
 
-cat > /etc/systemd/system/docker.socket <<\EOF
+cat >/etc/systemd/system/docker.socket <<\EOF
 [Unit]
 Description=Docker Socket for the API
 
@@ -180,7 +180,7 @@ WantedBy=sockets.target
 
 EOF
 
-cat > /etc/systemd/system/docker.service <<\EOF
+cat >/etc/systemd/system/docker.service <<\EOF
 [Unit]
 Description=Docker Application Container Engine
 Documentation=https://docs.docker.com
@@ -234,8 +234,8 @@ EOF
 
 # docker , 重启docker时保持容器继续运行
 mkdir -p /etc/docker/
-if ! [ -e /etc/docker/daemon.json ]; then  
-  cat >> /etc/docker/daemon.json <<-EOF
+if ! [ -e /etc/docker/daemon.json ]; then
+  cat >>/etc/docker/daemon.json <<-EOF
 {
   "live-restore": true,
   "log-driver": "json-file",
@@ -256,11 +256,11 @@ fi
 # fi
 
 systemctl daemon-reload
-if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then  
+if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service
 fi
 systemctl restart containerd.service
-if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then  
+if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then
   systemctl enable docker.socket
   systemctl enable docker.service
 fi
