@@ -33,23 +33,7 @@ steps:
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
-
-  - name: nerdctl-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v2.0.0-rc.2-amd64
-    environment:
-      TARGET_ARCH: amd64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
-
-  - name: docker-cli-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v27.2.1-amd64
-    environment:
-      TARGET_ARCH: amd64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/libexec/docker/cli-plugins/docker-buildx dist/linux-$TARGET_ARCH/docker-buildx
 
   - name: dockerd-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.2.1-amd64
@@ -60,6 +44,8 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
 
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
@@ -87,9 +73,6 @@ steps:
     depends_on:
       - runc-amd64
       - containerd-amd64
-      - nerdctl-amd64
-      - docker-init-amd64
-      - docker-cli-amd64
       - dockerd-amd64
 
   - name: runc-arm64
@@ -110,23 +93,7 @@ steps:
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
-
-  - name: nerdctl-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v2.0.0-rc.2-arm64
-    environment:
-      TARGET_ARCH: arm64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
-
-  - name: docker-cli-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v27.2.1-arm64
-    environment:
-      TARGET_ARCH: arm64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/libexec/docker/cli-plugins/docker-buildx dist/linux-$TARGET_ARCH/docker-buildx
 
   - name: dockerd-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.2.1-arm64
@@ -137,6 +104,8 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
 
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
@@ -164,9 +133,6 @@ steps:
     depends_on:
       - runc-arm64
       - containerd-arm64
-      - nerdctl-arm64
-      - docker-init-arm64
-      - docker-cli-arm64
       - dockerd-arm64
 
   - name: runc-loong64
@@ -187,23 +153,7 @@ steps:
       - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
-
-  - name: nerdctl-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/nerdctl:v2.0.0-rc.2-loong64
-    environment:
-      TARGET_ARCH: loong64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
-
-  - name: docker-cli-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/docker-cli:v27.2.1-loong64
-    environment:
-      TARGET_ARCH: loong64
-    commands:
-      - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/libexec/docker/cli-plugins/docker-buildx dist/linux-$TARGET_ARCH/docker-buildx
 
   - name: dockerd-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.2.1-loong64
@@ -214,6 +164,8 @@ steps:
       - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
 
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
@@ -241,9 +193,6 @@ steps:
     depends_on:
       - runc-loong64
       - containerd-loong64
-      - nerdctl-loong64
-      - docker-init-loong64
-      - docker-cli-loong64
       - dockerd-loong64
 
   - name: minio
