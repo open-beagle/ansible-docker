@@ -9,7 +9,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-26.1.5}"
+DOCKER_VERSION="${DOCKER_VERSION:-27.2.1}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -64,10 +64,10 @@ touch /opt/docker/docker-$DOCKER_VERSION.md
 rm -rf /opt/bin/runc
 cp /opt/docker/$DOCKER_VERSION/runc /opt/bin/runc
 
-rm -rf /opt/bin/ctr /opt/bin/containerd /opt/bin/containerd-shim /opt/bin/containerd-shim-runc-v2
+rm -rf /opt/bin/ctr /opt/bin/containerd /opt/bin/containerd-stress /opt/bin/containerd-shim-runc-v2
 cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
 cp /opt/docker/$DOCKER_VERSION/containerd /opt/bin/containerd
-cp /opt/docker/$DOCKER_VERSION/containerd-shim /opt/bin/containerd-shim
+cp /opt/docker/$DOCKER_VERSION/containerd-stress /opt/bin/containerd-stress
 cp /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /opt/bin/containerd-shim-runc-v2
 
 rm -rf /opt/bin/nerdctl
@@ -90,10 +90,10 @@ cp /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin
 rm -rf /usr/local/bin/runc
 ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
 
-rm -rf /usr/local/bin/ctr /usr/local/bin/containerd /usr/local/bin/containerd-shim /usr/local/bin/containerd-shim-runc-v2
+rm -rf /usr/local/bin/ctr /usr/local/bin/containerd /usr/local/bin/containerd-stress /usr/local/bin/containerd-shim-runc-v2
 ln -s /opt/docker/$DOCKER_VERSION/ctr /usr/local/bin/ctr
 ln -s /opt/docker/$DOCKER_VERSION/containerd /usr/local/bin/containerd
-ln -s /opt/docker/$DOCKER_VERSION/containerd-shim /usr/local/bin/containerd-shim
+ln -s /opt/docker/$DOCKER_VERSION/containerd-stress /usr/local/bin/containerd-stress
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
 
 rm -rf /usr/local/bin/nerdctl

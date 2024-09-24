@@ -14,7 +14,7 @@ HTTP_SERVER="https://cache.wodcloud.com"
 # 平台架构 amd64 arm64 ppc64le mips64le loong64
 TARGET_ARCH="amd64"
 # DOCKER版本
-DOCKER_VERSION="26.1.5"
+DOCKER_VERSION="27.2.1"
 
 mkdir -p /opt/docker
 # 下载文件
