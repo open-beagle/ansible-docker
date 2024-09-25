@@ -4,8 +4,6 @@ export PATH=/usr/sbin:$PATH
 
 set -ex
 
-# HTTPS服务器
-HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
@@ -20,10 +18,6 @@ elif [ "$LOCAL_ARCH" = "aarch64" ]; then
   TARGET_ARCH="arm64"
 elif [ "$LOCAL_ARCH" = "loongarch64" ]; then
   TARGET_ARCH="loong64"
-elif [ "$(echo $LOCAL_ARCH | head -c 5)" = "ppc64" ]; then
-  TARGET_ARCH="ppc64le"
-elif [ "$(echo $LOCAL_ARCH | head -c 6)" = "mips64" ]; then
-  TARGET_ARCH="mips64le"
 else
   TARGET_ARCH="unsupported"
 fi
@@ -38,42 +32,33 @@ if ! [ $(getent group docker) ]; then
   groupadd docker
 fi
 
-ENV_OPT="/opt/bin:$PATH"
 if ! (grep -q /opt/bin /etc/environment); then
   cat >/etc/environment <<-EOF
-PATH="${ENV_OPT}"
+PATH="/opt/bin:$PATH"
 EOF
 fi
-
-if [ -e /opt/docker/docker-$DOCKER_VERSION.md ]; then
-  exit 0
-fi
-
-if ! [ -e /opt/docker/docker-$DOCKER_VERSION.tgz ]; then
-  mkdir -p /opt/docker
-  # 下载文件
-  # docker-$DOCKER_VERSION.tgz 68MB
-  curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz >/opt/docker/docker-$DOCKER_VERSION.tgz
-fi
-
-mkdir -p /opt/docker/$DOCKER_VERSION
-tar -xzvf /opt/docker/docker-$DOCKER_VERSION.tgz -C /opt/docker/$DOCKER_VERSION
-rm -rf /opt/docker/docker-$DOCKER_VERSION.tgz
-touch /opt/docker/docker-$DOCKER_VERSION.md
 
 rm -rf /opt/bin/runc
 cp /opt/docker/$DOCKER_VERSION/runc /opt/bin/runc
 
-rm -rf /opt/bin/ctr /opt/bin/containerd /opt/bin/containerd-stress /opt/bin/containerd-shim-runc-v2
-cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
+rm -rf /opt/bin/containerd \
+  /opt/bin/containerd-shim \
+  /opt/bin/containerd-shim-runc-v1 \
+  /opt/bin/containerd-shim-runc-v2 \
+  /opt/bin/containerd-stress \
+  /opt/bin/ctr
 cp /opt/docker/$DOCKER_VERSION/containerd /opt/bin/containerd
-cp /opt/docker/$DOCKER_VERSION/containerd-stress /opt/bin/containerd-stress
 cp /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /opt/bin/containerd-shim-runc-v2
+cp /opt/docker/$DOCKER_VERSION/containerd-stress /opt/bin/containerd-stress
+cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
 
 rm -rf /opt/bin/nerdctl
 cp /opt/docker/$DOCKER_VERSION/nerdctl /opt/bin/nerdctl
 
-rm -rf /opt/bin/docker /opt/bin/dockerd /opt/bin/docker-init /opt/bin/docker-proxy
+rm -rf /opt/bin/docker \
+  /opt/bin/dockerd \
+  /opt/bin/docker-init \
+  /opt/bin/docker-proxy
 cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
 cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
 cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
@@ -90,17 +75,23 @@ cp /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin
 rm -rf /usr/local/bin/runc
 ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
 
-rm -rf /usr/local/bin/ctr /usr/local/bin/containerd /usr/local/bin/containerd-stress /usr/local/bin/containerd-shim-runc-v2
-ln -s /opt/docker/$DOCKER_VERSION/ctr /usr/local/bin/ctr
+rm -rf /usr/local/bin/containerd \
+  /usr/local/bin/containerd-shim \
+  /usr/local/bin/containerd-shim-runc-v1 \
+  /usr/local/bin/containerd-shim-runc-v2 \
+  /usr/local/bin/containerd-stress \
+  /usr/local/bin/ctr
 ln -s /opt/docker/$DOCKER_VERSION/containerd /usr/local/bin/containerd
-ln -s /opt/docker/$DOCKER_VERSION/containerd-stress /usr/local/bin/containerd-stress
+
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
+ln -s /opt/docker/$DOCKER_VERSION/containerd-stress /usr/local/bin/containerd-stress
 
 rm -rf /usr/local/bin/nerdctl
-cp /opt/docker/$DOCKER_VERSION/nerdctl /usr/local/bin/nerdctl
 
-rm -rf /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy
-ln -s /opt/docker/$DOCKER_VERSION/docker /usr/local/bin/docker
+rm -rf /usr/local/bin/docker \
+  /usr/local/bin/dockerd \
+  /usr/local/bin/docker-init \
+  /usr/local/bin/docker-proxy
 ln -s /opt/docker/$DOCKER_VERSION/dockerd /usr/local/bin/dockerd
 ln -s /opt/docker/$DOCKER_VERSION/docker-init /usr/local/bin/docker-init
 ln -s /opt/docker/$DOCKER_VERSION/docker-proxy /usr/local/bin/docker-proxy
@@ -142,6 +133,7 @@ After=network.target local-fs.target
 
 #uncomment to enable the experimental sbservice (sandboxed) version of containerd/cri integration
 #Environment="ENABLE_CRI_SANDBOXES=sandboxed"
+Environment=PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 ExecStartPre=-/sbin/modprobe overlay
 ExecStart=/opt/bin/containerd
 

@@ -4,6 +4,10 @@
 
 ```bash
 sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh -
+
+# 安装历史版本
+export DOCKER_VERSION=26.1.5
+sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh -
 ```
 
 ## 离线安装 Docker
@@ -20,12 +24,12 @@ mkdir -p /opt/docker
 # 下载文件
 # docker-$DOCKER_VERSION.tgz 68MB
 curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz > /opt/docker/docker-$DOCKER_VERSION.tgz
-# 下载文件
-# install.sh
-curl $HTTP_SERVER/kubernetes/k8s/docker/install.sh > /opt/docker/install.sh
+# 解压文件
+mkdir -p /opt/docker/$DOCKER_VERSION
+tar -xzvf /opt/docker/docker-${DOCKER_VERSION}.tgz -C /opt/docker/$DOCKER_VERSION
 
 # 安装Docker
-bash /opt/docker/install.sh
+bash /opt/docker/${DOCKER_VERSION}/install.sh
 ```
 
 ## 卸载 Docker
