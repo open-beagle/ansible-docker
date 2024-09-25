@@ -17,23 +17,10 @@ bash /opt/docker/install.sh
 ## 离线安装 Docker
 
 ```bash
-# HTTPS服务器
-HTTP_SERVER="https://cache.wodcloud.com"
-# 平台架构 amd64 arm64 loong64
-TARGET_ARCH="amd64"
-# DOCKER版本
-DOCKER_VERSION="27.3.1"
-
-mkdir -p /opt/docker
-# 下载文件
-# docker-$DOCKER_VERSION.tgz 68MB
-curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-$DOCKER_VERSION.tgz > /opt/docker/docker-$DOCKER_VERSION.tgz
-# 解压文件
-mkdir -p /opt/docker/$DOCKER_VERSION
-tar -xzvf /opt/docker/docker-${DOCKER_VERSION}.tgz -C /opt/docker/$DOCKER_VERSION
-
-# 安装Docker
-bash /opt/docker/${DOCKER_VERSION}/install.sh
+mkdir -p /opt/docker/27.3.1 && \
+curl https://cache.wodcloud.com/kubernetes/k8s/docker/amd64/docker-27.3.1.tgz > /opt/docker/docker-27.3.1.tgz && \
+tar -xzvf /opt/docker/docker-27.3.1.tgz -C /opt/docker/27.3.1 && \
+bash /opt/docker/27.3.1/scripts/install.sh
 ```
 
 ## 卸载 Docker
