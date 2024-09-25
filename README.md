@@ -15,7 +15,7 @@ sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh 
 ```bash
 # HTTPS服务器
 HTTP_SERVER="https://cache.wodcloud.com"
-# 平台架构 amd64 arm64 ppc64le mips64le loong64
+# 平台架构 amd64 arm64 loong64
 TARGET_ARCH="amd64"
 # DOCKER版本
 DOCKER_VERSION="27.2.1"
@@ -37,3 +37,8 @@ bash /opt/docker/${DOCKER_VERSION}/install.sh
 ```bash
 sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/uninstall.sh | sh -
 ```
+
+## 版本说明
+
+- v26 , 早期版本，将会使用 runc v1 ， contaienrd v1 ，适配持续集成等古早与 Docker 集成的软件 .
+- main , v27++ ， 使用了 Containerd v2 ， 暂时与持续集成冲突 ， 请不要使用在生产环境 .
