@@ -26,7 +26,7 @@ if [ "$LOCAL_ARCH" = "unsupported" ]; then
   exit 0
 fi
 
-mkdir -p /opt/bin /opt/docker
+mkdir -p /opt/bin /opt/docker /opt/cni/bin
 
 if ! [ $(getent group docker) ]; then
   groupadd docker
