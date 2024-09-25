@@ -104,8 +104,8 @@ if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
 fi
 
-cp /opt/docker/$DOCKER_VERSION/containerd.service /etc/systemd/system/containerd.service
-cp /opt/docker/$DOCKER_VERSION/docker.service /etc/systemd/system/docker.service
+cp /opt/docker/$DOCKER_VERSION/service/containerd.service /etc/systemd/system/containerd.service
+cp /opt/docker/$DOCKER_VERSION/service/docker.service /etc/systemd/system/docker.service
 
 # docker , 重启docker时保持容器继续运行
 if ! [ -e /etc/docker/daemon.json ]; then
