@@ -38,23 +38,22 @@ PATH="/opt/bin:$PATH"
 EOF
 fi
 
-# 遍历 /opt/docker/$DOCKER_VERSION/bin/ 中的文件
+# 安装bin/docker
 for file in /opt/docker/$DOCKER_VERSION/bin/*; do
-  # 获取文件名
   filename=$(basename "$file")
-
-  # 检查 /opt/bin 下是否存在同名文件
   rm -f /opt/bin/$filename /usr/local/bin/$filename
-
-  # 复制文件到 /opt/bin
   cp "$file" "/opt/bin/$filename"
 done
 rm -rf /opt/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
-mkdir -p /opt/cni/bin
-cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
+# 安装cni
+for file in /opt/docker/$DOCKER_VERSION/cni-plugins/*; do
+  filename=$(basename "$file")
+  rm -f /opt/cni/bin/$filename
+  cp "$file" /opt/cni/bin/
+done
 
 if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
