@@ -38,25 +38,20 @@ PATH="/opt/bin:$PATH"
 EOF
 fi
 
-cp /opt/docker/$DOCKER_VERSION/bin/* /opt/bin/
-rm -rf /opt/bin/docker-buildx
+# 遍历 /opt/docker/$DOCKER_VERSION/bin/ 中的文件
+for file in /opt/docker/$DOCKER_VERSION/bin/*; do
+  # 获取文件名
+  filename=$(basename "$file")
+
+  # 检查 /opt/bin 下是否存在同名文件
+  rm -f /opt/bin/$filename /usr/local/bin/$filename
+
+  # 复制文件到 /opt/bin
+  cp "$file" "/opt/bin/$filename"
+done
+rm -rf /opt/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
-
-rm -rf /usr/local/bin/runc
-
-rm -rf /usr/local/bin/containerd \
-  /usr/local/bin/containerd-shim \
-  /usr/local/bin/containerd-shim-runc-v1 \
-  /usr/local/bin/containerd-shim-runc-v2 \
-  /usr/local/bin/containerd-stress \
-  /usr/local/bin/ctr \
-  /usr/local/bin/nerdctl
-
-rm -rf /usr/local/bin/docker \
-  /usr/local/bin/dockerd \
-  /usr/local/bin/docker-init \
-  /usr/local/bin/docker-proxy
 
 mkdir -p /opt/cni/bin
 cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
