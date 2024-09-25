@@ -3,11 +3,13 @@
 ## 在线安装 Docker
 
 ```bash
-sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh -
+curl -sL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh > /opt/docker/install.sh && \
+bash /opt/docker/install.sh
 
 # 安装历史版本
-export DOCKER_VERSION=26.1.5
-sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh | sh -
+export DOCKER_VERSION=26.1.5 && \
+curl -sL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh > /opt/docker/install.sh && \
+bash /opt/docker/install.sh
 ```
 
 ## 离线安装 Docker
@@ -18,7 +20,7 @@ HTTP_SERVER="https://cache.wodcloud.com"
 # 平台架构 amd64 arm64 loong64
 TARGET_ARCH="amd64"
 # DOCKER版本
-DOCKER_VERSION="27.2.1"
+DOCKER_VERSION="27.3.1"
 
 mkdir -p /opt/docker
 # 下载文件
@@ -35,7 +37,7 @@ bash /opt/docker/${DOCKER_VERSION}/install.sh
 ## 卸载 Docker
 
 ```bash
-sudo curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/uninstall.sh | sh -
+curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/uninstall.sh | sh -
 ```
 
 ## 版本说明

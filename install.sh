@@ -46,4 +46,4 @@ if ! [ -e /opt/docker/${DOCKER_VERSION}/scripts/install.sh ]; then
   rm -rf /opt/docker/docker-${DOCKER_VERSION}.tgz
 fi
 
-. /opt/docker/${DOCKER_VERSION}/install.sh
+. /opt/docker/${DOCKER_VERSION}/scripts/install.sh
