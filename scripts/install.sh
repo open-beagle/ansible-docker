@@ -85,9 +85,9 @@ fi
 systemctl restart containerd.service
 if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.socket ]; then
   systemctl enable docker.socket
+  systemctl restart docker.socket
 fi
 if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then
   systemctl enable docker.service
 fi
-systemctl restart docker.socket
 systemctl restart docker.service
