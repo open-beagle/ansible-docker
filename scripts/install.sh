@@ -105,6 +105,7 @@ if ! [ -x "$(command -v iptables)" ]; then
 fi
 
 cp /opt/docker/$DOCKER_VERSION/service/containerd.service /etc/systemd/system/containerd.service
+cp /opt/docker/$DOCKER_VERSION/service/docker.socket /etc/systemd/system/docker.socket
 cp /opt/docker/$DOCKER_VERSION/service/docker.service /etc/systemd/system/docker.service
 
 # docker , 重启docker时保持容器继续运行
