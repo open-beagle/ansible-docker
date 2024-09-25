@@ -3,6 +3,8 @@
 ## 在线安装 Docker
 
 ```bash
+# 安装最新版本
+export DOCKER_VERSION=27.3.1 && \
 curl -sL https://cache.wodcloud.com/kubernetes/k8s/docker/install.sh > /opt/docker/install.sh && \
 bash /opt/docker/install.sh
 
