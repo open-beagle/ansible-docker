@@ -46,13 +46,12 @@ rm -rf /opt/bin/containerd \
   /opt/bin/containerd-shim-runc-v1 \
   /opt/bin/containerd-shim-runc-v2 \
   /opt/bin/containerd-stress \
-  /opt/bin/ctr
+  /opt/bin/ctr \
+  /opt/bin/nerdctl
 cp /opt/docker/$DOCKER_VERSION/containerd /opt/bin/containerd
 cp /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /opt/bin/containerd-shim-runc-v2
 cp /opt/docker/$DOCKER_VERSION/containerd-stress /opt/bin/containerd-stress
 cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
-
-rm -rf /opt/bin/nerdctl
 cp /opt/docker/$DOCKER_VERSION/nerdctl /opt/bin/nerdctl
 
 rm -rf /opt/bin/docker \
@@ -68,37 +67,23 @@ rm -rf /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
-rm -rf /opt/cni/bin
-mkdir -p /opt/cni/bin
-cp /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin
-
 rm -rf /usr/local/bin/runc
-ln -s /opt/docker/$DOCKER_VERSION/runc /usr/local/bin/runc
 
 rm -rf /usr/local/bin/containerd \
   /usr/local/bin/containerd-shim \
   /usr/local/bin/containerd-shim-runc-v1 \
   /usr/local/bin/containerd-shim-runc-v2 \
   /usr/local/bin/containerd-stress \
-  /usr/local/bin/ctr
-ln -s /opt/docker/$DOCKER_VERSION/containerd /usr/local/bin/containerd
-ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
-ln -s /opt/docker/$DOCKER_VERSION/containerd-stress /usr/local/bin/containerd-stress
-
-rm -rf /usr/local/bin/nerdctl
+  /usr/local/bin/ctr \
+  /usr/local/bin/nerdctl
 
 rm -rf /usr/local/bin/docker \
   /usr/local/bin/dockerd \
   /usr/local/bin/docker-init \
   /usr/local/bin/docker-proxy
-ln -s /opt/docker/$DOCKER_VERSION/dockerd /usr/local/bin/dockerd
-ln -s /opt/docker/$DOCKER_VERSION/docker-init /usr/local/bin/docker-init
-ln -s /opt/docker/$DOCKER_VERSION/docker-proxy /usr/local/bin/docker-proxy
 
-if ! [ -e /opt/cni/bin/portmap ]; then
-  mkdir -p /opt/cni/bin
-  cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
-fi
+mkdir -p /opt/cni/bin
+cp -r /opt/docker/$DOCKER_VERSION/cni-plugins/* /opt/cni/bin/
 
 if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
