@@ -7,7 +7,7 @@ set -ex
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-27.2.1}"
+DOCKER_VERSION="${DOCKER_VERSION:-27.3.1}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -82,7 +82,6 @@ rm -rf /usr/local/bin/containerd \
   /usr/local/bin/containerd-stress \
   /usr/local/bin/ctr
 ln -s /opt/docker/$DOCKER_VERSION/containerd /usr/local/bin/containerd
-
 ln -s /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /usr/local/bin/containerd-shim-runc-v2
 ln -s /opt/docker/$DOCKER_VERSION/containerd-stress /usr/local/bin/containerd-stress
 
@@ -105,137 +104,13 @@ if ! [ -x "$(command -v iptables)" ]; then
   cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
 fi
 
-cat >/etc/systemd/system/containerd.service <<\EOF
-# Copyright The containerd Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-[Unit]
-Description=containerd container runtime
-Documentation=https://containerd.io
-After=network.target local-fs.target
-
-[Service]
-#如无法正确下载镜像开启以下参数
-#某些开启了杀毒软件的主机可能会在没有MountFags=slave的情况下阻止大型超过300MB的镜像Layer卸载unmount
-#https://github.com/containerd/containerd/issues/5538
-#MountFlags=slave
-
-#uncomment to enable the experimental sbservice (sandboxed) version of containerd/cri integration
-#Environment="ENABLE_CRI_SANDBOXES=sandboxed"
-Environment=PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-ExecStartPre=-/sbin/modprobe overlay
-ExecStart=/opt/bin/containerd
-
-Type=notify
-Delegate=yes
-KillMode=process
-Restart=always
-RestartSec=5
-# Having non-zero Limit*s causes performance problems due to accounting overhead
-# in the kernel. We recommend using cgroups to do container-local accounting.
-LimitNPROC=infinity
-LimitCORE=infinity
-LimitNOFILE=infinity
-# Comment TasksMax if your systemd version does not supports it.
-# Only systemd 226 and above support this version.
-TasksMax=infinity
-OOMScoreAdjust=-999
-
-[Install]
-WantedBy=multi-user.target
-
-EOF
-
-cat >/etc/systemd/system/docker.socket <<\EOF
-[Unit]
-Description=Docker Socket for the API
-
-[Socket]
-ListenStream=/var/run/docker.sock
-SocketMode=0660
-SocketUser=root
-SocketGroup=docker
-
-[Install]
-WantedBy=sockets.target
-
-EOF
-
-cat >/etc/systemd/system/docker.service <<\EOF
-[Unit]
-Description=Docker Application Container Engine
-Documentation=https://docs.docker.com
-After=network-online.target firewalld.service containerd.service
-Wants=network-online.target containerd.service
-Requires=docker.socket 
-
-[Service]
-Type=notify
-# the default is not to use systemd for cgroups because the delegate issues still
-# exists and systemd currently does not support the cgroup feature set required
-# for containers run by docker
-Environment=PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-ExecStart=/opt/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
-ExecReload=/bin/kill -s HUP $MAINPID
-TimeoutSec=0
-RestartSec=2
-Restart=always
-
-# Note that StartLimit* options were moved from "Service" to "Unit" in systemd 229.
-# Both the old, and new location are accepted by systemd 229 and up, so using the old location
-# to make them work for either version of systemd.
-StartLimitBurst=3
-
-# Note that StartLimitInterval was renamed to StartLimitIntervalSec in systemd 230.
-# Both the old, and new name are accepted by systemd 230 and up, so using the old name to make
-# this option work for either version of systemd.
-StartLimitInterval=60s
-
-# Having non-zero Limit*s causes performance problems due to accounting overhead
-# in the kernel. We recommend using cgroups to do container-local accounting.
-LimitNOFILE=infinity
-LimitNPROC=infinity
-LimitCORE=infinity
-
-# Comment TasksMax if your systemd version does not support it.
-# Only systemd 226 and above support this option.
-TasksMax=infinity
-
-# set delegate yes so that systemd does not reset the cgroups of docker containers
-Delegate=yes
-
-# kill only the docker process, not all processes in the cgroup
-KillMode=process
-OOMScoreAdjust=-500
-
-[Install]
-WantedBy=multi-user.target
-
-EOF
+cp /opt/docker/$DOCKER_VERSION/containerd.service /etc/systemd/system/containerd.service
+cp /opt/docker/$DOCKER_VERSION/docker.service /etc/systemd/system/docker.service
 
 # docker , 重启docker时保持容器继续运行
-mkdir -p /etc/docker/
 if ! [ -e /etc/docker/daemon.json ]; then
-  cat >>/etc/docker/daemon.json <<-EOF
-{
-  "live-restore": true,
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  }
-}
-EOF
+  mkdir -p /etc/docker/
+  cp /opt/docker/$DOCKER_VERSION/etc/docker/daemon.json /etc/docker/daemon.json
 fi
 
 # loong64 , loong64架构的基础镜像不支持seccomp，所以要关闭此设置
@@ -252,8 +127,10 @@ if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service
 fi
 systemctl restart containerd.service
-if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then
+if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.socket ]; then
   systemctl enable docker.socket
+fi
+if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then
   systemctl enable docker.service
 fi
 systemctl restart docker.socket

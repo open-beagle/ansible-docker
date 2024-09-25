@@ -7,7 +7,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-27.2.1}"
+DOCKER_VERSION="${DOCKER_VERSION:-27.3.1}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -36,7 +36,7 @@ if [ -e /opt/bin/docker ]; then
   fi
 fi
 
-if ! [ -e /opt/docker/${DOCKER_VERSION}/install.sh ]; then
+if ! [ -e /opt/docker/${DOCKER_VERSION}/scripts/install.sh ]; then
   rm -rf /opt/docker/$DOCKER_VERSION
   mkdir -p /opt/docker /opt/docker/$DOCKER_VERSION
   # 下载文件
