@@ -28,8 +28,3 @@ bash /opt/docker/27.3.1/scripts/install.sh
 ```bash
 curl -sfL https://cache.wodcloud.com/kubernetes/k8s/docker/uninstall.sh | sh -
 ```
-
-## 版本说明
-
-- v26 , 早期版本，将会使用 runc v1 ， contaienrd v1 ，适配持续集成等古早与 Docker 集成的软件 .
-- main , v27++ ， 使用了 Containerd v2 ， 暂时与持续集成冲突 ， 请不要使用在生产环境 .

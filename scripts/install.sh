@@ -40,7 +40,6 @@ fi
 
 cp /opt/docker/$DOCKER_VERSION/bin/* /opt/bin/
 rm -rf /opt/bin/docker-buildx
-rm -rf /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
