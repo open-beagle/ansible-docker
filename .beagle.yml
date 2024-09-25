@@ -53,6 +53,14 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
+  - name: toml-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-amd64
+    environment:
+      TARGET_ARCH: amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
     environment:
@@ -81,6 +89,7 @@ steps:
       - runc-amd64
       - containerd-amd64
       - dockerd-amd64
+      - toml-amd64
       - cni-amd64
       - iptables-amd64
 
@@ -122,6 +131,14 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
+  - name: toml-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-arm64
+    environment:
+      TARGET_ARCH: arm64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
     environment:
@@ -150,6 +167,7 @@ steps:
       - runc-arm64
       - containerd-arm64
       - dockerd-arm64
+      - toml-arm64
       - cni-arm64
       - iptables-arm64
 
@@ -191,6 +209,14 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
+  - name: toml-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-loong64
+    environment:
+      TARGET_ARCH: loong64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
     environment:
@@ -219,6 +245,7 @@ steps:
       - runc-loong64
       - containerd-loong64
       - dockerd-loong64
+      - toml-loong64
       - cni-loong64
       - iptables-loong64
 
