@@ -36,12 +36,12 @@ if [ -e /opt/bin/docker ]; then
   fi
 fi
 
-if ! [ -e /opt/docker/${DOCKER_VERSION}/docker ]; then
-  mkdir -p /opt/docker
+if ! [ -e /opt/docker/${DOCKER_VERSION}/install.sh ]; then
+  rm -rf /opt/docker/$DOCKER_VERSION
+  mkdir -p /opt/docker /opt/docker/$DOCKER_VERSION
   # 下载文件
   # docker-${DOCKER_VERSION}.tgz 68MB
   curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-${DOCKER_VERSION}.tgz >/opt/docker/docker-${DOCKER_VERSION}.tgz
-  mkdir -p /opt/docker/$DOCKER_VERSION
   tar -xzvf /opt/docker/docker-${DOCKER_VERSION}.tgz -C /opt/docker/$DOCKER_VERSION
   rm -rf /opt/docker/docker-${DOCKER_VERSION}.tgz
 fi
