@@ -38,34 +38,11 @@ PATH="/opt/bin:$PATH"
 EOF
 fi
 
-rm -rf /opt/bin/runc
-cp /opt/docker/$DOCKER_VERSION/runc /opt/bin/runc
-
-rm -rf /opt/bin/containerd \
-  /opt/bin/containerd-shim \
-  /opt/bin/containerd-shim-runc-v1 \
-  /opt/bin/containerd-shim-runc-v2 \
-  /opt/bin/containerd-stress \
-  /opt/bin/ctr \
-  /opt/bin/nerdctl
-cp /opt/docker/$DOCKER_VERSION/containerd /opt/bin/containerd
-cp /opt/docker/$DOCKER_VERSION/containerd-shim-runc-v2 /opt/bin/containerd-shim-runc-v2
-cp /opt/docker/$DOCKER_VERSION/containerd-stress /opt/bin/containerd-stress
-cp /opt/docker/$DOCKER_VERSION/ctr /opt/bin/ctr
-cp /opt/docker/$DOCKER_VERSION/nerdctl /opt/bin/nerdctl
-
-rm -rf /opt/bin/docker \
-  /opt/bin/dockerd \
-  /opt/bin/docker-init \
-  /opt/bin/docker-proxy
-cp /opt/docker/$DOCKER_VERSION/docker /opt/bin/docker
-cp /opt/docker/$DOCKER_VERSION/dockerd /opt/bin/dockerd
-cp /opt/docker/$DOCKER_VERSION/docker-init /opt/bin/docker-init
-cp /opt/docker/$DOCKER_VERSION/docker-proxy /opt/bin/docker-proxy
-
+cp /opt/docker/$DOCKER_VERSION/bin/* /opt/bin/
+rm -rf /opt/bin/docker-buildx
 rm -rf /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
-cp /opt/docker/$DOCKER_VERSION/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
+cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 rm -rf /usr/local/bin/runc
 
