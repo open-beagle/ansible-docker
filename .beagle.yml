@@ -40,10 +40,8 @@ steps:
       TARGET_ARCH: amd64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
+      - cp /usr/local/bin/container* dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: dockerd-amd64
@@ -52,11 +50,7 @@ steps:
       TARGET_ARCH: amd64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docke* dist/linux-$TARGET_ARCH/
 
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
@@ -114,10 +108,8 @@ steps:
       TARGET_ARCH: arm64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
+      - cp /usr/local/bin/container* dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: dockerd-arm64
@@ -126,11 +118,7 @@ steps:
       TARGET_ARCH: arm64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docke* dist/linux-$TARGET_ARCH/
 
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
@@ -188,10 +176,8 @@ steps:
       TARGET_ARCH: loong64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
+      - cp /usr/local/bin/container* dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/ctr dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-stress dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/containerd-shim-runc-v2 dist/linux-$TARGET_ARCH/
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/nerdctl
 
   - name: dockerd-loong64
@@ -200,11 +186,7 @@ steps:
       TARGET_ARCH: loong64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH
-      - cp /usr/local/bin/dockerd dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-proxy dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-init dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker dist/linux-$TARGET_ARCH/
-      - cp /usr/local/bin/docker-buildx dist/linux-$TARGET_ARCH/
+      - cp /usr/local/bin/docke* dist/linux-$TARGET_ARCH/
 
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
