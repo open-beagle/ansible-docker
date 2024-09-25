@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -ex
 
@@ -7,7 +7,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-26.1.5}"
+DOCKER_VERSION="${DOCKER_VERSION:-27.2.1}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
@@ -46,4 +46,4 @@ if ! [ -e /opt/docker/${DOCKER_VERSION}/docker ]; then
   rm -rf /opt/docker/docker-${DOCKER_VERSION}.tgz
 fi
 
-source /opt/docker/${DOCKER_VERSION}/install.sh
+. /opt/docker/${DOCKER_VERSION}/install.sh
