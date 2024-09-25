@@ -232,6 +232,7 @@ steps:
     commands:
       - mkdir -p .tmp
       - mc alias set cache --api=S3v4 https://cache.wodcloud.com $S3_ACCESS_KEY $S3_SECRET_KEY
+      - mc cp *.sh cache/kubernetes/k8s/docker/
       - mc cp --recursive .tmp/ cache/kubernetes/k8s/docker/
     depends_on:
       - fetch
