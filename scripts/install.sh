@@ -48,6 +48,10 @@ rm -rf /opt/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
 cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
+# 将docker , nerdctl 命令安装至全局
+ln -s /opt/docker/$DOCKER_VERSION/bin/docker /usr/local/bin/docker
+ln -s /opt/docker/$DOCKER_VERSION/bin/nerdctl /usr/local/bin/nerdctl
+
 # 安装cni
 for file in /opt/docker/$DOCKER_VERSION/cni-plugins/*; do
   filename=$(basename "$file")
