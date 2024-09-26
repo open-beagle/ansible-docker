@@ -54,12 +54,13 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: toml-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tomlq:0.1.6-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
-      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
@@ -132,12 +133,13 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: toml-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tomlq:0.1.6-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
-      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
@@ -210,12 +212,13 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: toml-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/toml-cli:v0.1.1-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/tomlq:0.1.6-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
-      - cp /usr/local/bin/toml-cli dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
