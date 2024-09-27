@@ -62,6 +62,18 @@ steps:
       - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
       - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
 
+  - name: dasel-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
+
+  - name: yq-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
+
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-amd64
     environment:
@@ -132,14 +144,17 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
-  - name: toml-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tomlq:0.1.6-arm64
-    environment:
-      TARGET_ARCH: arm64
+  - name: dasel-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-arm64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
-      - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
-      - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
+
+  - name: yq-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-arm64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-arm64
@@ -211,14 +226,17 @@ steps:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
-  - name: toml-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/tomlq:0.1.6-loong64
-    environment:
-      TARGET_ARCH: loong64
+  - name: dasel-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-loong64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
-      - cp /usr/local/bin/tomlq dist/linux-$TARGET_ARCH/bin/
-      - cp /usr/local/bin/tq dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
+
+  - name: yq-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-loong64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.3.0-loong64
