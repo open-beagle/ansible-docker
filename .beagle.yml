@@ -55,12 +55,16 @@ steps:
 
   - name: dasel-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
+    environment:
+      TARGET_ARCH: amd64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
+    environment:
+      TARGET_ARCH: amd64
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
