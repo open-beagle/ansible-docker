@@ -91,8 +91,8 @@ steps:
     environment:
       TARGET_ARCH: amd64
     commands:
-      - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-27.3.1.tgz -C dist/linux-$TARGET_ARCH/ .
+      - mkdir -p .tmp
+      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-amd64
       - runc-amd64
@@ -178,8 +178,8 @@ steps:
     environment:
       TARGET_ARCH: arm64
     commands:
-      - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-27.3.1.tgz -C dist/linux-$TARGET_ARCH/ .
+      - mkdir -p .tmp
+      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-arm64
       - runc-arm64
@@ -265,8 +265,8 @@ steps:
     environment:
       TARGET_ARCH: loong64
     commands:
-      - mkdir -p .tmp/$TARGET_ARCH
-      - tar zcvf .tmp/$TARGET_ARCH/docker-27.3.1.tgz -C dist/linux-$TARGET_ARCH/ .
+      - mkdir -p .tmp
+      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-loong64
       - runc-loong64
@@ -285,10 +285,10 @@ steps:
       S3_SECRET_KEY:
         from_secret: SECRET_KEY_MINIO
     commands:
-      - mkdir -p .tmp
       - mc alias set cache --api=S3v4 https://cache.wodcloud.com $S3_ACCESS_KEY $S3_SECRET_KEY
-      - mc cp *.sh cache/kubernetes/k8s/docker/
-      - mc cp --recursive .tmp/ cache/kubernetes/k8s/docker/
+      - mc cp install.sh cache/kubernetes/k8s/ansible/ansible-docker.sh
+      - mc cp uninstall.sh cache/kubernetes/k8s/ansible/ansible-docker-uninstall.sh
+      - mc cp --recursive .tmp/ cache/kubernetes/k8s/ansible/
     depends_on:
       - fetch
       - tgz-amd64
@@ -584,8 +584,8 @@ steps:
     commands:
       - mkdir -p .tmp
       - mc alias set cache --api=S3v4 https://cache.wodcloud.com $S3_ACCESS_KEY $S3_SECRET_KEY
-      - mc cp *.sh cache/kubernetes/k8s/docker/
-      - mc cp --recursive .tmp/ cache/kubernetes/k8s/docker/
+      - mc cp *.sh cache/kubernetes/k8s/ansible/
+      - mc cp --recursive .tmp/ cache/kubernetes/k8s/ansible/
     depends_on:
       - fetch
       - tgz-amd64
