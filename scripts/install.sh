@@ -73,15 +73,6 @@ if ! [ -e /etc/docker/daemon.json ]; then
   cp /opt/docker/$DOCKER_VERSION/etc/docker/daemon.json /etc/docker/daemon.json
 fi
 
-# loong64 , loong64架构的基础镜像不支持seccomp，所以要关闭此设置
-# if [ "$TARGET_ARCH" = "loong64" ]; then
-#   if [ -e /etc/docker/daemon.json.bak ]; then
-#     mv /etc/docker/daemon.json.bak /etc/docker/daemon.json.bak.`date +"%Y%m%d%H%M%S"`
-#   fi
-#   mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
-#   cat /etc/docker/daemon.json.bak | jq '."seccomp-profile"="unconfined"' > /etc/docker/daemon.json
-# fi
-
 systemctl daemon-reload
 if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service

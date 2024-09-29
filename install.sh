@@ -42,7 +42,7 @@ if ! [ -e /opt/docker/${DOCKER_VERSION}/scripts/install.sh ]; then
   # 下载文件
   # docker-${DOCKER_VERSION}.tgz 68MB
   if ! [ -e /opt/docker/docker-${DOCKER_VERSION}.tgz ]; then
-    curl $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-${DOCKER_VERSION}.tgz >/opt/docker/docker-${DOCKER_VERSION}.tgz
+    curl -sL $HTTP_SERVER/kubernetes/k8s/docker/$TARGET_ARCH/docker-${DOCKER_VERSION}.tgz >/opt/docker/docker-${DOCKER_VERSION}.tgz
   fi
   tar -xzvf /opt/docker/docker-${DOCKER_VERSION}.tgz -C /opt/docker/$DOCKER_VERSION
   rm -rf /opt/docker/docker-${DOCKER_VERSION}.tgz
