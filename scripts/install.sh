@@ -26,6 +26,16 @@ if [ "$LOCAL_ARCH" = "unsupported" ]; then
   exit 0
 fi
 
+if [ -e /opt/bin/docker ]; then
+  # 获取当前 Docker 版本
+  current_version=$(/opt/bin/docker version --format '{{.Server.Version}}')
+  # 比较版本
+  if [ "$current_version" = "${DOCKER_VERSION}-beagle" ]; then
+    echo "版本一致 $current_version , 无需安装."
+    exit 0
+  fi
+fi
+
 mkdir -p /opt/bin /opt/docker /opt/cni/bin
 
 if ! [ $(getent group docker) ]; then
