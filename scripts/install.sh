@@ -58,20 +58,28 @@ ln -s /opt/docker/${DOCKER_VERSION}/bin/docker-buildx /usr/libexec/docker/cli-pl
 rm -rf /opt/bin/buildctl
 rm -rf /opt/bin/ctr
 rm -rf /opt/bin/docker
+rm -rf /opt/bin/dasel
 rm -rf /opt/bin/nerdctl
+rm -rf /opt/bin/yq
 ln -s /opt/docker/${DOCKER_VERSION}/bin/buildctl /opt/bin/buildctl
 ln -s /opt/docker/${DOCKER_VERSION}/bin/ctr /opt/bin/ctr
 ln -s /opt/docker/${DOCKER_VERSION}/bin/docker /opt/bin/docker
+ln -s /opt/docker/${DOCKER_VERSION}/bin/dasel /opt/bin/dasel
 ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /opt/bin/nerdctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/yq /opt/bin/yq
 
 rm -rf /usr/local/bin/buildctl
 rm -rf /usr/local/bin/ctr
 rm -rf /usr/local/bin/docker
+rm -rf /usr/local/bin/dasel
 rm -rf /usr/local/bin/nerdctl
+rm -rf /usr/local/bin/yq
 ln -s /opt/docker/${DOCKER_VERSION}/bin/buildctl /usr/local/bin/buildctl
 ln -s /opt/docker/${DOCKER_VERSION}/bin/ctr /usr/local/bin/ctr
 ln -s /opt/docker/${DOCKER_VERSION}/bin/docker /usr/local/bin/docker
+ln -s /opt/docker/${DOCKER_VERSION}/bin/dasel /usr/local/bin/dasel
 ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /usr/local/bin/nerdctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/yq /usr/local/bin/yq
 
 # 安装cni
 rm -rf /opt/cni/bin
