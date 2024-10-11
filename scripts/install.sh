@@ -105,7 +105,7 @@ if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service
 fi
 systemctl restart containerd.service
-if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.socket ]; then
+if ! [ -e /etc/systemd/system/sockets.target.wants/docker.socket ]; then
   systemctl enable docker.socket
   systemctl restart docker.socket
 fi
@@ -113,3 +113,15 @@ if ! [ -e /etc/systemd/system/multi-user.target.wants/docker.service ]; then
   systemctl enable docker.service
 fi
 systemctl restart docker.service
+
+cp /opt/docker/${DOCKER_VERSION}/service/buildkit.socket /etc/systemd/system/buildkit.socket
+cp /opt/docker/${DOCKER_VERSION}/service/buildkit.service /etc/systemd/system/buildkit.service
+
+if ! [ -e /etc/systemd/system/sockets.target.wants/buildkit.socket ]; then
+  systemctl enable buildkit.socket
+  systemctl restart buildkit.socket
+fi
+if ! [ -e /etc/systemd/system/multi-user.target.wants/buildkit.service ]; then
+  systemctl enable buildkit.service
+fi
+systemctl restart buildkit.service
