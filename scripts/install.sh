@@ -93,6 +93,7 @@ fi
 cp /opt/docker/${DOCKER_VERSION}/service/containerd.service /etc/systemd/system/containerd.service
 cp /opt/docker/${DOCKER_VERSION}/service/docker.socket /etc/systemd/system/docker.socket
 cp /opt/docker/${DOCKER_VERSION}/service/docker.service /etc/systemd/system/docker.service
+systemctl daemon-reload
 
 # docker , 重启docker时保持容器继续运行
 if ! [ -e /etc/docker/daemon.json ]; then
@@ -100,7 +101,6 @@ if ! [ -e /etc/docker/daemon.json ]; then
   cp /opt/docker/${DOCKER_VERSION}/etc/docker/daemon.json /etc/docker/daemon.json
 fi
 
-systemctl daemon-reload
 if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service
 fi
@@ -116,6 +116,7 @@ systemctl restart docker.service
 
 cp /opt/docker/${DOCKER_VERSION}/service/buildkit.socket /etc/systemd/system/buildkit.socket
 cp /opt/docker/${DOCKER_VERSION}/service/buildkit.service /etc/systemd/system/buildkit.service
+systemctl daemon-reload
 
 if ! [ -e /etc/systemd/system/sockets.target.wants/buildkit.socket ]; then
   systemctl enable buildkit.socket
