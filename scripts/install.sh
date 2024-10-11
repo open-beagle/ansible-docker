@@ -74,7 +74,7 @@ ln -s /opt/docker/${DOCKER_VERSION}/bin/docker /usr/local/bin/docker
 ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /usr/local/bin/nerdctl
 
 # 安装cni
-rm -f /opt/cni/bin
+rm -rf /opt/cni/bin
 ln -s /opt/docker/${DOCKER_VERSION}/cni-plugins /opt/cni/bin
 
 # 安装iptables
