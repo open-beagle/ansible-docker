@@ -25,9 +25,9 @@ After=network.target local-fs.target
 
 #uncomment to enable the experimental sbservice (sandboxed) version of containerd/cri integration
 #Environment="ENABLE_CRI_SANDBOXES=sandboxed"
-Environment=PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+Environment=PATH=/opt/docker/current/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 ExecStartPre=-/sbin/modprobe overlay
-ExecStart=/opt/bin/containerd
+ExecStart=/opt/docker/current/bin/containerd
 
 Type=notify
 Delegate=yes

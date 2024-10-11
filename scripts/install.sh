@@ -26,15 +26,15 @@ if [ "$LOCAL_ARCH" = "unsupported" ]; then
   exit 0
 fi
 
-if [ -e /opt/bin/docker ]; then
-  # 获取当前 Docker 版本
-  current_version=$(/opt/bin/docker version --format '{{.Server.Version}}')
-  # 比较版本
-  if [ "$current_version" = "${DOCKER_VERSION}-beagle" ]; then
-    echo "版本一致 $current_version , 无需安装."
-    exit 0
-  fi
-fi
+# if [ -e /opt/bin/docker ]; then
+#   # 获取当前 Docker 版本
+#   current_version=$(/opt/bin/docker version --format '{{.Server.Version}}')
+#   # 比较版本
+#   if [ "$current_version" = "${DOCKER_VERSION}-beagle" ]; then
+#     echo "版本一致 $current_version , 无需安装."
+#     exit 0
+#   fi
+# fi
 
 mkdir -p /opt/bin /opt/docker /opt/cni/bin
 
@@ -42,45 +42,54 @@ if ! [ $(getent group docker) ]; then
   groupadd docker
 fi
 
-if ! (grep -q /opt/bin /etc/environment); then
-  cat >/etc/environment <<-EOF
-PATH="/opt/bin:$PATH"
-EOF
-fi
-
 # 安装bin/docker
-for file in /opt/docker/$DOCKER_VERSION/bin/*; do
-  filename=$(basename "$file")
-  rm -f /opt/bin/$filename /usr/local/bin/$filename
-  cp "$file" "/opt/bin/$filename"
-done
-rm -rf /opt/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
+if [ -L "/opt/docker/current" ] && [ "$(readlink -f "/opt/docker/current")" = "/opt/docker/${DOCKER_VERSION}" ]; then
+  echo "版本${DOCKER_VERSION}，系统已安装，如若需要更新请先卸载。"
+  exit 0
+else
+  rm -rf /opt/docker/current
+  ln -s /opt/docker/${DOCKER_VERSION} /opt/docker/current
+fi
+rm -rf /usr/libexec/docker/cli-plugins/docker-buildx
 mkdir -p /usr/libexec/docker/cli-plugins
-cp /opt/docker/$DOCKER_VERSION/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
+ln -s /opt/docker/${DOCKER_VERSION}/bin/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
-# 将docker , nerdctl 命令安装至全局
-ln -s /opt/docker/$DOCKER_VERSION/bin/docker /usr/local/bin/docker
-ln -s /opt/docker/$DOCKER_VERSION/bin/nerdctl /usr/local/bin/nerdctl
+# 将 buildctl, ctr, docker, nerdctl 命令安装至全局
+rm -rf /opt/bin/buildctl
+rm -rf /opt/bin/ctr
+rm -rf /opt/bin/docker
+rm -rf /opt/bin/nerdctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/buildctl /opt/bin/buildctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/ctr /opt/bin/ctr
+ln -s /opt/docker/${DOCKER_VERSION}/bin/docker /opt/bin/docker
+ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /opt/bin/nerdctl
+
+rm -rf /usr/local/bin/buildctl
+rm -rf /usr/local/bin/ctr
+rm -rf /usr/local/bin/docker
+rm -rf /usr/local/bin/nerdctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/buildctl /usr/local/bin/buildctl
+ln -s /opt/docker/${DOCKER_VERSION}/bin/ctr /usr/local/bin/ctr
+ln -s /opt/docker/${DOCKER_VERSION}/bin/docker /usr/local/bin/docker
+ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /usr/local/bin/nerdctl
 
 # 安装cni
-for file in /opt/docker/$DOCKER_VERSION/cni-plugins/*; do
-  filename=$(basename "$file")
-  rm -f /opt/cni/bin/$filename
-  cp "$file" /opt/cni/bin/
-done
+rm -f /opt/cni/bin
+ln -s /opt/docker/${DOCKER_VERSION}/cni-plugins /opt/cni/bin
 
+# 安装iptables
 if ! [ -x "$(command -v iptables)" ]; then
-  cp -r /opt/docker/$DOCKER_VERSION/iptables/usr/* /usr/local/
+  cp -r /opt/docker/${DOCKER_VERSION}/iptables/usr/* /usr/local/
 fi
 
-cp /opt/docker/$DOCKER_VERSION/service/containerd.service /etc/systemd/system/containerd.service
-cp /opt/docker/$DOCKER_VERSION/service/docker.socket /etc/systemd/system/docker.socket
-cp /opt/docker/$DOCKER_VERSION/service/docker.service /etc/systemd/system/docker.service
+cp /opt/docker/${DOCKER_VERSION}/service/containerd.service /etc/systemd/system/containerd.service
+cp /opt/docker/${DOCKER_VERSION}/service/docker.socket /etc/systemd/system/docker.socket
+cp /opt/docker/${DOCKER_VERSION}/service/docker.service /etc/systemd/system/docker.service
 
 # docker , 重启docker时保持容器继续运行
 if ! [ -e /etc/docker/daemon.json ]; then
   mkdir -p /etc/docker/
-  cp /opt/docker/$DOCKER_VERSION/etc/docker/daemon.json /etc/docker/daemon.json
+  cp /opt/docker/${DOCKER_VERSION}/etc/docker/daemon.json /etc/docker/daemon.json
 fi
 
 systemctl daemon-reload

@@ -37,7 +37,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.4-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -69,6 +69,15 @@ steps:
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
+
+  - name: buildkit-amd64
+    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-amd64
+    environment:
+      TARGET_ARCH: amd64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/bin/buildctl dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-amd64
@@ -124,7 +133,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.4-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -156,6 +165,15 @@ steps:
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
+
+  - name: buildkit-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-arm64
+    environment:
+      TARGET_ARCH: arm64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/bin/buildctl dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-arm64
@@ -211,7 +229,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.4-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -243,6 +261,15 @@ steps:
     commands:
       - mkdir -p dist/linux-$TARGET_ARCH/bin
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
+
+  - name: buildkit-loong64
+    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-loong64
+    environment:
+      TARGET_ARCH: loong64
+    commands:
+      - mkdir -p dist/linux-$TARGET_ARCH/bin
+      - cp /usr/bin/buildctl dist/linux-$TARGET_ARCH/bin/
+      - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-loong64
     image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-loong64
