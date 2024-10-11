@@ -6,7 +6,7 @@ Documentation=https://github.com/moby/buildkit
 
 [Service]
 Type=notify
-ExecStart=/opt/docker/current/bin/buildkitd --addr --oci-worker=false --containerd-worker=true fd://
+ExecStart=/opt/docker/current/bin/buildkitd --oci-worker=false --containerd-worker=true --addr fd://
 
 [Install]
 WantedBy=multi-user.target
