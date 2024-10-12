@@ -11,13 +11,13 @@ clone:
 
 steps:
   - name: fetch
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
     settings:
       proxy:
         from_secret: SOCKS5_PROXY
 
   - name: scripts-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -29,7 +29,7 @@ steps:
       - fetch
 
   - name: runc-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -37,7 +37,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -47,7 +47,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -55,7 +55,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -63,7 +63,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -71,7 +71,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: buildkit-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -80,7 +80,7 @@ steps:
       - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -88,7 +88,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -96,7 +96,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -113,7 +113,7 @@ steps:
       - iptables-amd64
 
   - name: scripts-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -125,7 +125,7 @@ steps:
       - fetch
 
   - name: runc-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -133,7 +133,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -143,7 +143,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -151,7 +151,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -159,7 +159,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -167,7 +167,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: buildkit-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -176,7 +176,7 @@ steps:
       - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -184,7 +184,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -192,7 +192,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -209,7 +209,7 @@ steps:
       - iptables-arm64
 
   - name: scripts-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -221,7 +221,7 @@ steps:
       - fetch
 
   - name: runc-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -229,7 +229,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -239,7 +239,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v27.3.1-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -247,7 +247,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -255,7 +255,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -263,7 +263,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: buildkit-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/buildkit:v0.16.0-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -272,7 +272,7 @@ steps:
       - cp /usr/bin/buildkitd dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -280,7 +280,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -288,7 +288,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -305,7 +305,7 @@ steps:
       - iptables-loong64
 
   - name: minio
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-minio:1.0
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-minio:1.0
     environment:
       S3_ACCESS_KEY:
         from_secret: S3_ACCESS_KEY_ALIYUN
@@ -335,13 +335,13 @@ clone:
 
 steps:
   - name: fetch
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
     settings:
       proxy:
         from_secret: SOCKS5_PROXY
 
   - name: scripts-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -353,7 +353,7 @@ steps:
       - fetch
 
   - name: runc-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -361,7 +361,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -371,7 +371,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -379,7 +379,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -387,7 +387,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -395,7 +395,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -403,7 +403,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -411,7 +411,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-amd64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -428,7 +428,7 @@ steps:
       - iptables-amd64
 
   - name: scripts-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -440,7 +440,7 @@ steps:
       - fetch
 
   - name: runc-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -448,7 +448,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -458,7 +458,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -466,7 +466,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -474,7 +474,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -482,7 +482,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -490,7 +490,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -498,7 +498,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -515,7 +515,7 @@ steps:
       - iptables-arm64
 
   - name: scripts-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -527,7 +527,7 @@ steps:
       - fetch
 
   - name: runc-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -535,7 +535,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v1.7.22-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -545,7 +545,7 @@ steps:
       - cp /usr/local/bin/nerdctl dist/linux-$TARGET_ARCH/bin/
 
   - name: dockerd-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dockerd:v26.1.5-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -553,7 +553,7 @@ steps:
       - cp /usr/local/bin/docker* dist/linux-$TARGET_ARCH/bin/
 
   - name: dasel-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/dasel:v2.8.1-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -561,7 +561,7 @@ steps:
       - cp /usr/local/bin/dasel dist/linux-$TARGET_ARCH/bin/
 
   - name: yq-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/yq:v4.9.8-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -569,7 +569,7 @@ steps:
       - cp /usr/local/bin/yq dist/linux-$TARGET_ARCH/bin/
 
   - name: cni-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/kube-cni-plugins:v1.5.1-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -577,7 +577,7 @@ steps:
       - cp /opt/cni/bin/* dist/linux-$TARGET_ARCH/cni-plugins/
 
   - name: iptables-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/iptables:v1.8.0-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -585,7 +585,7 @@ steps:
       - cp -r /iptables dist/linux-$TARGET_ARCH
 
   - name: tgz-loong64
-    image: registry.cn-qingdao.aliyuncs.com/wod/alpine:3
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/alpine:3
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -602,7 +602,7 @@ steps:
       - iptables-loong64
 
   - name: minio
-    image: registry.cn-qingdao.aliyuncs.com/wod/devops-minio:1.0
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-minio:1.0
     environment:
       S3_ACCESS_KEY:
         from_secret: S3_ACCESS_KEY_ALIYUN
