@@ -3,7 +3,7 @@
 set -ex
 
 # HTTPS服务器
-HTTP_SERVER="${HTTP_SERVER:-https://cache.wodcloud.com}"
+HTTP_SERVER="${HTTP_SERVER:-https://cache.ali.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
@@ -31,7 +31,7 @@ if ! [ -e /opt/docker/${DOCKER_VERSION}/scripts/install.sh ]; then
   mkdir -p /opt/docker/$DOCKER_VERSION
   # 下载文件
   # ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz 68MB
-  curl -sL $HTTP_SERVER/kubernetes/k8s/ansible/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz >/opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
+  curl -sL $HTTP_SERVER/kubernetes/ansible/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz >/opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
   tar -xzvf /opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz -C /opt/docker/$DOCKER_VERSION
   rm -rf /opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
 fi
