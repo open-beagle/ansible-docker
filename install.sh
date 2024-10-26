@@ -31,7 +31,11 @@ if ! [ -e /opt/docker/${DOCKER_VERSION}/scripts/install.sh ]; then
   mkdir -p /opt/docker/$DOCKER_VERSION
   # 下载文件
   # ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz 68MB
-  curl -sL $HTTP_SERVER/kubernetes/ansible/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz >/opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
+  if ! [ -e /opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz ]; then
+    # 下载文件
+    # ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz 68MB
+    curl -fL $HTTP_SERVER/kubernetes/ansible/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz >/opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
+  fi
   tar -xzvf /opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz -C /opt/docker/$DOCKER_VERSION
   rm -rf /opt/docker/ansible-docker-${DOCKER_VERSION}-$TARGET_ARCH.tgz
 fi
