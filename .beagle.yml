@@ -29,7 +29,7 @@ steps:
       - fetch
 
   - name: runc-amd64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -37,7 +37,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-amd64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.6-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -125,7 +125,7 @@ steps:
       - fetch
 
   - name: runc-arm64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -133,7 +133,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-arm64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.6-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -221,7 +221,7 @@ steps:
       - fetch
 
   - name: runc-loong64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -229,7 +229,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-loong64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.5-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.0-rc.6-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
@@ -353,7 +353,7 @@ steps:
       - fetch
 
   - name: runc-amd64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -440,7 +440,7 @@ steps:
       - fetch
 
   - name: runc-arm64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -527,7 +527,7 @@ steps:
       - fetch
 
   - name: runc-loong64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.14-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/runc:v1.1.15-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
