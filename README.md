@@ -4,7 +4,7 @@
 
 ```bash
 # 安装最新版本
-export DOCKER_VERSION=27.3.1 && \
+export DOCKER_VERSION=27.3.2 && \
 mkdir -p /opt/docker && \
 curl -sL https://cache.ali.wodcloud.com/kubernetes/ansible/ansible-docker.sh > /opt/docker/ansible-docker.sh && \
 bash /opt/docker/ansible-docker.sh
@@ -19,10 +19,17 @@ bash /opt/docker/ansible-docker.sh
 ## 离线安装 Docker
 
 ```bash
-mkdir -p /opt/docker/27.3.1 && \
-curl https://cache.ali.wodcloud.com/kubernetes/ansible/ansible-docker-27.3.1-amd64.tgz > /opt/docker/ansible-docker-27.3.1-amd64.tgz && \
-tar -xzvf /opt/docker/ansible-docker-27.3.1-amd64.tgz -C /opt/docker/27.3.1 && \
-bash /opt/docker/27.3.1/scripts/install.sh
+## amd64
+mkdir -p /opt/docker/27.3.2 && \
+curl https://cache.ali.wodcloud.com/kubernetes/ansible/ansible-docker-27.3.2-amd64.tgz > /opt/docker/ansible-docker-27.3.2-amd64.tgz && \
+tar -xzvf /opt/docker/ansible-docker-27.3.2-amd64.tgz -C /opt/docker/27.3.2 && \
+bash /opt/docker/27.3.2/scripts/install.sh
+
+## arm64
+mkdir -p /opt/docker/27.3.2 && \
+curl https://cache.ali.wodcloud.com/kubernetes/ansible/ansible-docker-27.3.2-arm64.tgz > /opt/docker/ansible-docker-27.3.2-arm64.tgz && \
+tar -xzvf /opt/docker/ansible-docker-27.3.2-arm64.tgz -C /opt/docker/27.3.2 && \
+bash /opt/docker/27.3.2/scripts/install.sh
 ```
 
 ## 卸载 Docker

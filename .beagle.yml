@@ -101,7 +101,7 @@ steps:
       TARGET_ARCH: amd64
     commands:
       - mkdir -p .tmp
-      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/ansible-docker-27.3.2-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-amd64
       - runc-amd64
@@ -197,7 +197,7 @@ steps:
       TARGET_ARCH: arm64
     commands:
       - mkdir -p .tmp
-      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/ansible-docker-27.3.2-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-arm64
       - runc-arm64
@@ -293,7 +293,7 @@ steps:
       TARGET_ARCH: loong64
     commands:
       - mkdir -p .tmp
-      - tar zcvf .tmp/ansible-docker-27.3.1-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
+      - tar zcvf .tmp/ansible-docker-27.3.2-$TARGET_ARCH.tgz -C dist/linux-$TARGET_ARCH/ .
     depends_on:
       - scripts-loong64
       - runc-loong64
