@@ -7,7 +7,7 @@ HTTP_SERVER="${HTTP_SERVER:-https://cache.ali.wodcloud.com}"
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-27.3.1}"
+DOCKER_VERSION="${DOCKER_VERSION:-27.3.2}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
