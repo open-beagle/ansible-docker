@@ -82,8 +82,14 @@ ln -s /opt/docker/${DOCKER_VERSION}/bin/nerdctl /usr/local/bin/nerdctl
 ln -s /opt/docker/${DOCKER_VERSION}/bin/yq /usr/local/bin/yq
 
 # 安装cni
-rm -rf /opt/cni/bin
-ln -s /opt/docker/${DOCKER_VERSION}/cni-plugins /opt/cni/bin
+mkdir -p /opt/cni/bin
+for file in /opt/docker/${DOCKER_VERSION}/cni-plugins/*; do
+  filename=$(basename "$file")
+  if [ -e "/opt/cni/bin/$filename" ]; then
+    rm -f "/opt/cni/bin/$filename"
+  fi
+  ln -s "$file" "/opt/cni/bin/$filename"
+done
 
 # 安装iptables
 if ! [ -x "$(command -v iptables)" ]; then
