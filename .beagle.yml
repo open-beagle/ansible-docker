@@ -37,7 +37,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-amd64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.2-amd64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.3-amd64
     environment:
       TARGET_ARCH: amd64
     commands:
@@ -133,7 +133,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-arm64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.2-arm64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.3-arm64
     environment:
       TARGET_ARCH: arm64
     commands:
@@ -229,7 +229,7 @@ steps:
       - cp /usr/local/bin/runc dist/linux-$TARGET_ARCH/bin/
 
   - name: containerd-loong64
-    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.2-loong64
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/containerd:v2.0.3-loong64
     environment:
       TARGET_ARCH: loong64
     commands:
