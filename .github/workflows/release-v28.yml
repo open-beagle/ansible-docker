@@ -1,0 +1,118 @@
+name: Release Docker Components
+
+on:
+  push:
+    branches:
+      - release-v28
+  workflow_dispatch: # 允许手动触发
+
+env:
+  DOCKER_VERSION: v28.2.2
+  CONTAINERD_VERSION: v2.1.3
+  RUNC_VERSION: v1.2.6
+  CNI_VERSION: v1.7.1
+  BUILDKIT_VERSION: v0.23.0
+  DASEL_VERSION: v2.8.1
+  YQ_VERSION: v4.9.8
+  IPTABLES_VERSION: v1.8.10
+
+jobs:
+  package:
+    name: Package Components
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create distribution directory
+        run: |
+          mkdir -p dist/linux-${{ matrix.arch }}
+          cp -r etc dist/linux-${{ matrix.arch }}/
+          cp -r scripts dist/linux-${{ matrix.arch }}/
+          cp -r service dist/linux-${{ matrix.arch }}/
+
+      - name: Download runc
+        run: |
+          mkdir -p dist/linux-${{ matrix.arch }}/bin
+          docker create --name temp-runc ghcr.io/${{ github.repository_owner }}/runc:${{ env.RUNC_VERSION }}-${{ matrix.arch }}
+          docker cp temp-runc:/usr/local/bin/runc dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-runc
+          chmod +x dist/linux-${{ matrix.arch }}/bin/runc
+
+      - name: Download containerd
+        run: |
+          docker create --name temp-container ghcr.io/${{ github.repository_owner }}/containerd:${{ env.CONTAINERD_VERSION }}-${{ matrix.arch }}
+          docker cp temp-container:/usr/local/bin/container* dist/linux-${{ matrix.arch }}/bin/
+          docker cp temp-container:/usr/local/bin/ctr dist/linux-${{ matrix.arch }}/bin/
+          docker cp temp-container:/usr/local/bin/nerdctl dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-container
+          chmod +x dist/linux-${{ matrix.arch }}/bin/*
+
+      - name: Download dockerd
+        run: |
+          docker create --name temp-docker ghcr.io/${{ github.repository_owner }}/dockerd:${{ env.DOCKER_VERSION }}-${{ matrix.arch }}
+          docker cp temp-docker:/usr/local/bin/docker* dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-docker
+          chmod +x dist/linux-${{ matrix.arch }}/bin/*
+
+      - name: Download dasel
+        run: |
+          docker create --name temp-dasel ghcr.io/${{ github.repository_owner }}/dasel:${{ env.DASEL_VERSION }}-${{ matrix.arch }}
+          docker cp temp-dasel:/usr/local/bin/dasel dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-dasel
+          chmod +x dist/linux-${{ matrix.arch }}/bin/dasel
+
+      - name: Download yq
+        run: |
+          docker create --name temp-yq ghcr.io/${{ github.repository_owner }}/yq:${{ env.YQ_VERSION }}-${{ matrix.arch }}
+          docker cp temp-yq:/usr/local/bin/yq dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-yq
+          chmod +x dist/linux-${{ matrix.arch }}/bin/yq
+
+      - name: Download buildkit
+        run: |
+          docker create --name temp-buildkit ghcr.io/${{ github.repository_owner }}/buildkit:${{ env.BUILDKIT_VERSION }}-${{ matrix.arch }}
+          docker cp temp-buildkit:/usr/bin/buildctl dist/linux-${{ matrix.arch }}/bin/
+          docker cp temp-buildkit:/usr/bin/buildkitd dist/linux-${{ matrix.arch }}/bin/
+          docker rm temp-buildkit
+          chmod +x dist/linux-${{ matrix.arch }}/bin/*
+
+      - name: Download cni-plugins
+        run: |
+          mkdir -p dist/linux-${{ matrix.arch }}/cni-plugins
+          docker create --name temp-cni ghcr.io/${{ github.repository_owner }}/kube-cni-plugins:${{ env.CNI_VERSION }}-${{ matrix.arch }}
+          docker cp temp-cni:/opt/cni/bin/ dist/linux-${{ matrix.arch }}/cni-plugins/
+          docker rm temp-cni
+          chmod +x dist/linux-${{ matrix.arch }}/cni-plugins/*
+
+      - name: Download iptables
+        run: |
+          docker create --name temp-iptables ghcr.io/${{ github.repository_owner }}/iptables:${{ env.IPTABLES_VERSION }}-${{ matrix.arch }}
+          docker cp temp-iptables:/iptables dist/linux-${{ matrix.arch }}/
+          docker rm temp-iptables
+
+      - name: Create tar.gz package
+        run: |
+          mkdir -p .tmp
+          tar zcvf .tmp/ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}.tgz -C dist/linux-${{ matrix.arch }}/ .
+
+      - name: Setup MinIO Client
+        run: |
+          wget https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          sudo mv mc /usr/local/bin/
+
+      - name: Upload to MinIO
+        run: |
+          mc alias set aliyun --api=S3v4 https://cache.ali.wodcloud.com ${{ secrets.S3_ACCESS_KEY_ALIYUN }} ${{ secrets.S3_SECRET_KEY_ALIYUN }}
+          mc cp install.sh aliyun/kubernetes/ansible/ansible-docker.sh
+          mc cp uninstall.sh aliyun/kubernetes/ansible/ansible-docker-uninstall.sh
+          mc cp --recursive .tmp/ aliyun/kubernetes/ansible/
+        env:
+          S3_ACCESS_KEY_ALIYUN: ${{ secrets.S3_ACCESS_KEY_ALIYUN }}
+          S3_SECRET_KEY_ALIYUN: ${{ secrets.S3_SECRET_KEY_ALIYUN }}
