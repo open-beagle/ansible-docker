@@ -7,7 +7,7 @@ set -ex
 # 平台架构
 TARGET_ARCH="${TARGET_ARCH:-amd64}"
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-27.5.1}"
+DOCKER_VERSION="${DOCKER_VERSION:-28.2.2}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
