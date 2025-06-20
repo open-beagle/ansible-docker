@@ -23,6 +23,8 @@ jobs:
     strategy:
       matrix:
         arch: [amd64, arm64]
+    outputs:
+      artifacts: ${{ steps.upload-artifacts.outputs.artifacts }}
     
     steps:
       - name: Checkout code
@@ -98,6 +100,26 @@ jobs:
           mkdir -p .tmp
           tar zcvf .tmp/ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}.tgz -C dist/linux-${{ matrix.arch }}/ .
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}
+          path: .tmp/ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}.tgz
+          retention-days: 1
+
+  upload-to-minio:
+    name: Upload to MinIO
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
       - name: Setup MinIO Client
         run: |
           wget https://dl.min.io/client/mc/release/linux-amd64/mc
@@ -109,7 +131,12 @@ jobs:
           mc alias set aliyun --api=S3v4 https://cache.ali.wodcloud.com ${{ secrets.S3_ACCESS_KEY_ALIYUN }} ${{ secrets.S3_SECRET_KEY_ALIYUN }}
           mc cp install.sh aliyun/kubernetes/ansible/ansible-docker.sh
           mc cp uninstall.sh aliyun/kubernetes/ansible/ansible-docker-uninstall.sh
-          mc cp --recursive .tmp/ aliyun/kubernetes/ansible/
+          # 上传所有架构的包
+          for arch in amd64 arm64; do
+            if [ -f "artifacts/ansible-docker-${{ env.DOCKER_VERSION }}-$arch/ansible-docker-${{ env.DOCKER_VERSION }}-$arch.tgz" ]; then
+              mc cp "artifacts/ansible-docker-${{ env.DOCKER_VERSION }}-$arch/ansible-docker-${{ env.DOCKER_VERSION }}-$arch.tgz" "aliyun/kubernetes/ansible/"
+            fi
+          done
         env:
           S3_ACCESS_KEY_ALIYUN: ${{ secrets.S3_ACCESS_KEY_ALIYUN }}
           S3_SECRET_KEY_ALIYUN: ${{ secrets.S3_SECRET_KEY_ALIYUN }}
