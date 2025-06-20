@@ -46,7 +46,7 @@ jobs:
       - name: Download containerd
         run: |
           docker create --name temp-container ghcr.io/${{ github.repository_owner }}/containerd:${{ env.CONTAINERD_VERSION }}-${{ matrix.arch }}
-          docker cp temp-container:/opt/containerd/bin/* dist/linux-${{ matrix.arch }}/bin/
+          docker cp temp-container:/opt/containerd/bin/. dist/linux-${{ matrix.arch }}/bin/
           docker rm temp-container
           chmod +x dist/linux-${{ matrix.arch }}/bin/*
 
