@@ -53,7 +53,7 @@ jobs:
       - name: Download dockerd
         run: |
           docker create --name temp-docker ghcr.io/${{ github.repository_owner }}/dockerd:${{ env.DOCKER_VERSION }}-${{ matrix.arch }}
-          docker cp temp-docker:/usr/local/bin/docker* dist/linux-${{ matrix.arch }}/bin/
+          docker cp temp-docker:/opt/docker/bin/. dist/linux-${{ matrix.arch }}/bin/
           docker rm temp-docker
           chmod +x dist/linux-${{ matrix.arch }}/bin/*
 
