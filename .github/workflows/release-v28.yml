@@ -30,6 +30,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Remove 'v' prefix and set new env var
+        id: strip_v
+        run: |
+          echo "DOCKER_VERSION_WITHOUT_V=${DOCKER_VERSION#v}" >> $GITHUB_ENV
+
       - name: Create distribution directory
         run: |
           mkdir -p dist/linux-${{ matrix.arch }}
@@ -98,13 +103,13 @@ jobs:
       - name: Create tar.gz package
         run: |
           mkdir -p .tmp
-          tar zcvf .tmp/ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}.tgz -C dist/linux-${{ matrix.arch }}/ .
+          tar zcvf .tmp/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-${{ matrix.arch }}.tgz -C dist/linux-${{ matrix.arch }}/ .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}
-          path: .tmp/ansible-docker-${{ env.DOCKER_VERSION }}-${{ matrix.arch }}.tgz
+          name: ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-${{ matrix.arch }}
+          path: .tmp/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-${{ matrix.arch }}.tgz
           retention-days: 1
 
   upload-to-minio:
@@ -114,6 +119,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Remove 'v' prefix and set new env var
+        id: strip_v
+        run: |
+          echo "DOCKER_VERSION_WITHOUT_V=${DOCKER_VERSION#v}" >> $GITHUB_ENV
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -133,8 +143,8 @@ jobs:
           mc cp uninstall.sh aliyun/kubernetes/ansible/ansible-docker-uninstall.sh
           # 上传所有架构的包
           for arch in amd64 arm64; do
-            if [ -f "artifacts/ansible-docker-${{ env.DOCKER_VERSION }}-$arch/ansible-docker-${{ env.DOCKER_VERSION }}-$arch.tgz" ]; then
-              mc cp "artifacts/ansible-docker-${{ env.DOCKER_VERSION }}-$arch/ansible-docker-${{ env.DOCKER_VERSION }}-$arch.tgz" "aliyun/kubernetes/ansible/"
+            if [ -f "artifacts/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-$arch/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-$arch.tgz" ]; then
+              mc cp "artifacts/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-$arch/ansible-docker-${{ env.DOCKER_VERSION_WITHOUT_V }}-$arch.tgz" "aliyun/kubernetes/ansible/"
             fi
           done
         env:
