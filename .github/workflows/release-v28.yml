@@ -90,7 +90,7 @@ jobs:
         run: |
           mkdir -p dist/linux-${{ matrix.arch }}/cni-plugins
           docker create --name temp-cni ghcr.io/${{ github.repository_owner }}/kube-cni-plugins:${{ env.CNI_VERSION }}-${{ matrix.arch }}
-          docker cp temp-cni:/opt/cni/bin/ dist/linux-${{ matrix.arch }}/cni-plugins/
+          docker cp temp-cni:/opt/cni/bin/. dist/linux-${{ matrix.arch }}/cni-plugins/
           docker rm temp-cni
           chmod +x dist/linux-${{ matrix.arch }}/cni-plugins/*
 
