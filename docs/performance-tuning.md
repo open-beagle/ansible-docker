@@ -49,7 +49,6 @@ EOF
 {
   "live-restore": true,
   "storage-driver": "overlay2",
-  "storage-opts": ["overlay2.override_kernel_check=true"],
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m"

@@ -104,6 +104,13 @@ if ! [ -e /etc/docker/daemon.json ]; then
   mkdir -p /etc/docker/
   cp /opt/docker/${DOCKER_VERSION}/etc/docker/daemon.json /etc/docker/daemon.json
 fi
+if grep -q "overlay2.override_kernel_check=true" /etc/docker/daemon.json; then
+  if command -v yq >/dev/null 2>&1 && yq eval -i 'del(.["storage-opts"][] | select(. == "overlay2.override_kernel_check=true")) | del(.["storage-opts"] | select(length == 0))' /etc/docker/daemon.json; then
+    echo "已移除不兼容 Docker 28.5.1 的 overlay2.override_kernel_check 配置。"
+  else
+    sed -i '/overlay2\.override_kernel_check=true/d' /etc/docker/daemon.json
+  fi
+fi
 
 if ! [ -e /etc/systemd/system/multi-user.target.wants/containerd.service ]; then
   systemctl enable containerd.service
