@@ -5,7 +5,7 @@ export PATH=/usr/sbin:$PATH
 set -ex
 
 # DOCKER版本
-DOCKER_VERSION="${DOCKER_VERSION:-28.3.2}"
+DOCKER_VERSION="${DOCKER_VERSION:-28.5.1}"
 
 LOCAL_ARCH=$(uname -m)
 if [ "$LOCAL_ARCH" = "x86_64" ]; then
